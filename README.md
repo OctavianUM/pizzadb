@@ -1,4 +1,6 @@
 # Databases project: pizza delivery
-## importing the database
+## exporting the database
+`mysqldump --add-drop-table -u root -p pizzadb > src\main\java\com\dbproject\resources\pizzadb.sql`
 
-`mysqldump --add-drop-table -u root -p pizzadb > src\main\java\com\dbproject\resources\pizzadb.sql` cmd
+## importing the database
+`mysql -u root -p pizzadb < src\main\java\com\dbproject\resources\pizzadb.sql` 

@@ -28,7 +28,7 @@ CREATE TABLE `adress` (
   `street` varchar(32) DEFAULT NULL,
   `number` int DEFAULT NULL,
   PRIMARY KEY (`adressId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,6 +37,7 @@ CREATE TABLE `adress` (
 
 LOCK TABLES `adress` WRITE;
 /*!40000 ALTER TABLE `adress` DISABLE KEYS */;
+INSERT INTO `adress` VALUES (1,1001,'Maple Street',12),(2,1001,'Oak Avenue',34),(3,1001,'Maple Street',29),(4,1001,'Pine Road',56),(5,1002,'Elm Boulevard',78),(6,1002,'Elm Boulevard',69),(7,1002,'Birch Lane',23),(8,1002,'Cedar Court',45),(9,1002,'Spruce Drive',7),(10,1002,'Spruce Drive',26),(21,1003,'Paul-Henri Spaaklaan',1);
 /*!40000 ALTER TABLE `adress` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -159,10 +160,10 @@ DROP TABLE IF EXISTS `ingredient`;
 CREATE TABLE `ingredient` (
   `ingredientID` int NOT NULL AUTO_INCREMENT,
   `name` varchar(32) NOT NULL,
-  `dietary` tinyint(1) NOT NULL,
+  `dietary` varchar(16) DEFAULT NULL,
   `price` decimal(10,2) NOT NULL,
   PRIMARY KEY (`ingredientID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -171,6 +172,7 @@ CREATE TABLE `ingredient` (
 
 LOCK TABLES `ingredient` WRITE;
 /*!40000 ALTER TABLE `ingredient` DISABLE KEYS */;
+INSERT INTO `ingredient` VALUES (1,'Pizza Dough','Vegetarian',1.50),(2,'Tomato Sauce','Vegetarian',1.00),(3,'Mozzarella Cheese','Vegetarian',3.00),(4,'Parmesan Cheese','Vegetarian',1.50),(5,'Pepperoni','Non-Vegetarian',1.25),(6,'Mushrooms','Vegetarian',0.60),(7,'Onions','Vegetarian',0.18),(8,'Bell Peppers','Vegetarian',0.50),(9,'Olives','Vegetarian',0.70),(10,'Sausage','Non-Vegetarian',1.00),(11,'Ham','Non-Vegetarian',1.00),(12,'Bacon','Non-Vegetarian',1.50),(13,'Spinach','Vegetarian',0.40),(14,'Basil','Vegetarian',0.08),(15,'Oregano','Vegetarian',0.02),(16,'Garlic','Vegetarian',0.03),(17,'Pineapple','Vegetarian',0.50),(18,'Anchovies','Non-Vegetarian',1.50),(19,'Ground Beef','Non-Vegetarian',1.25),(20,'Red Pepper Flakes','Vegetarian',0.02),(21,'Coca-Cola Fluid','Vegetarian',1.00),(22,'Sprite Fluid','Vegetarian',1.00),(23,'Fanta Fluid','Vegetarian',1.00),(24,'Dr Pepper Fluid','Vegetarian',1.00),(25,'Mountain Dew Fluid','Vegetarian',1.00),(26,'Flour','Vegetarian',0.50),(27,'Sugar','Vegetarian',0.20),(28,'Cocoa Powder','Vegetarian',0.75),(29,'Cream Cheese','Vegetarian',2.00),(30,'Graham Crackers','Vegetarian',1.00),(31,'Eggs','Vegetarian',0.15),(32,'Butter','Vegetarian',0.80),(33,'Coffee','Vegetarian',0.30),(34,'Apples','Vegetarian',0.60),(35,'Cinnamon','Vegetarian',0.10);
 /*!40000 ALTER TABLE `ingredient` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -182,9 +184,8 @@ DROP TABLE IF EXISTS `menu`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `menu` (
-  `menuID` int NOT NULL AUTO_INCREMENT,
+  `menuID` int DEFAULT NULL,
   `menuItemID` int DEFAULT NULL,
-  PRIMARY KEY (`menuID`),
   KEY `menuItemID` (`menuItemID`),
   CONSTRAINT `menu_ibfk_1` FOREIGN KEY (`menuItemID`) REFERENCES `menuitem` (`menuItemID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -196,6 +197,7 @@ CREATE TABLE `menu` (
 
 LOCK TABLES `menu` WRITE;
 /*!40000 ALTER TABLE `menu` DISABLE KEYS */;
+INSERT INTO `menu` VALUES (0,1),(0,2),(0,3),(0,4),(0,5),(0,6),(0,7),(0,8),(0,9),(0,10),(0,11),(0,12),(0,13),(0,14),(0,15),(0,16),(0,17),(0,18),(0,19),(0,20),(0,21);
 /*!40000 ALTER TABLE `menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -212,7 +214,7 @@ CREATE TABLE `menuitem` (
   `type` varchar(8) NOT NULL,
   `description` text,
   PRIMARY KEY (`menuItemID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -221,6 +223,7 @@ CREATE TABLE `menuitem` (
 
 LOCK TABLES `menuitem` WRITE;
 /*!40000 ALTER TABLE `menuitem` DISABLE KEYS */;
+INSERT INTO `menuitem` VALUES (1,'Margherita Pizza','pizza','Classic cheese and tomato.'),(2,'Pepperoni Pizza','pizza','Spicy pepperoni slices.'),(3,'Vegetarian Pizza','pizza','Loaded with fresh veggies.'),(4,'Meat Lovers Pizza','pizza','All your favorite meats.'),(5,'Hawaiian Pizza','pizza','Ham and pineapple.'),(6,'BBQ Chicken Pizza','pizza','BBQ sauce with chicken.'),(7,'Four Cheese Pizza','pizza','Blend of four cheeses.'),(8,'Spinach and Feta Pizza','pizza','Spinach with feta cheese.'),(9,'Mediterranean Pizza','pizza','Olives and feta cheese.'),(10,'Buffalo Chicken Pizza','pizza','Spicy chicken with sauce.'),(11,'Anchovy Pizza','pizza','Topped with anchovies.'),(12,'Pepperoni and Mushroom Pizza','pizza','Pepperoni with mushrooms.'),(13,'Coca-Cola','drink','Classic cola flavor.'),(14,'Sprite','drink','Refreshing lemon-lime flavor.'),(15,'Fanta','drink','Sweet orange soda.'),(16,'Dr Pepper','drink','Unique blend of 23 flavors.'),(17,'Mountain Dew','drink','Citrus-flavored soda with a kick.'),(18,'Chocolate Cake','dessert','Rich and moist chocolate cake.'),(19,'Cheesecake','dessert','Creamy cheesecake with a graham cracker crust.'),(20,'Tiramisu','dessert','Classic Italian coffee-flavored dessert.'),(21,'Apple Pie','dessert','Warm apple pie with a flaky crust.');
 /*!40000 ALTER TABLE `menuitem` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -293,6 +296,7 @@ DROP TABLE IF EXISTS `recipe`;
 CREATE TABLE `recipe` (
   `menuItemID` int DEFAULT NULL,
   `ingredientID` int DEFAULT NULL,
+  `amount` tinyint DEFAULT NULL,
   KEY `menuItemID` (`menuItemID`),
   KEY `ingredientID` (`ingredientID`),
   CONSTRAINT `recipe_ibfk_1` FOREIGN KEY (`menuItemID`) REFERENCES `menuitem` (`menuItemID`),
@@ -306,6 +310,7 @@ CREATE TABLE `recipe` (
 
 LOCK TABLES `recipe` WRITE;
 /*!40000 ALTER TABLE `recipe` DISABLE KEYS */;
+INSERT INTO `recipe` VALUES (1,1,2),(1,2,1),(1,3,1),(1,14,1),(1,15,1),(2,1,2),(2,2,1),(2,3,1),(2,5,1),(3,1,2),(3,2,1),(3,3,1),(3,6,1),(3,7,1),(3,8,1),(3,13,1),(4,1,2),(4,2,1),(4,3,1),(4,5,1),(4,10,1),(4,12,1),(4,19,1),(5,1,2),(5,2,1),(5,3,1),(5,11,1),(5,17,1),(6,1,2),(6,3,1),(7,1,2),(7,2,1),(7,3,1),(7,4,1),(7,13,1),(8,1,2),(8,3,1),(8,13,1),(8,16,1),(9,1,2),(9,2,1),(9,3,1),(9,9,1),(9,8,1),(10,1,2),(10,3,1),(10,20,1),(11,1,2),(11,2,1),(11,3,1),(11,18,1),(11,16,1),(12,1,2),(12,2,1),(12,3,1),(12,5,1),(12,6,1),(13,21,1),(14,22,1),(15,23,1),(16,24,1),(17,25,1),(18,26,2),(18,27,1),(18,28,1),(18,31,3),(18,32,1),(19,29,2),(19,27,1),(19,31,2),(19,30,1),(19,32,1),(20,33,1),(20,27,1),(20,28,1),(20,31,2),(21,34,3),(21,27,1),(21,35,0),(21,26,1),(21,32,1);
 /*!40000 ALTER TABLE `recipe` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -318,4 +323,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-09-27 11:21:56
+-- Dump completed on 2024-09-27 19:46:02
