@@ -1,8 +1,12 @@
 package com.dbproject;
 
+import com.dbproject.dao.CustomerDAO;
 import com.dbproject.domain.Adress;
+import com.dbproject.domain.Customer;
 import com.dbproject.domain.MenuItem;
 import com.dbproject.util.*;
+
+import java.sql.Date;
 import java.util.*;
 import org.hibernate.Session;
 
@@ -11,21 +15,25 @@ import org.hibernate.Session;
 public class App {
     
     public static void main(String[] args) {
-        var sessionFactory = HibernateUtil.getSessionFactory();
+        //initialize database connection when starting the program
+        HibernateUtil.getSessionFactory();
 
-        Session session = sessionFactory.openSession();
+        CustomerDAO customerDAO = new CustomerDAO();
 
-        // query data using HQL
-        System.out.println(
-            Querries.getAdressByStreet(session, "Paul-Henri Spaaklaan").getStreet()
-
-        );
-
-        Querries.getMenuById(session, 0)
-            .forEach(e -> {
-                System.out.println(e.getName());
-            });
+        String email = "johndoe@example.com";
+        String password = "johndoe";
         
+        if (customerDAO.customerExists(email)) {
+            System.out.println(
+                customerDAO.validateLogin(email, password)? "successfull login" : "wrong password"
+            );
+            
+        } else {    
+            System.out.println("customer does not exist: creating new one");
+            Customer customer = new Customer("John", "Doe", 'M',new Date(01052005), 12345678, 1, email, password);
+    
+            customerDAO.saveCustomer(customer);
+        }
 
         HibernateUtil.shutdown();
     }

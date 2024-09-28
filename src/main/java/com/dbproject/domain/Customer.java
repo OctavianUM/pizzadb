@@ -1,29 +1,37 @@
 package com.dbproject.domain;
 
+import java.sql.Date;
+
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.NaturalId;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
 @Entity
 public class Customer {
     @Id
+    @Generated
     private int customerId;
     private String firstName;
     private String lastName;
     private char gender;
     private int phone;
     private int adressId;
+    @NaturalId
     private String email;
     private String password;
+    private Date birthDate;
 
     public Customer(){}
-    public Customer(int customerId, String firstName, String lastName, char gender, int phone, int adressId, String email, String password) {
-        this.customerId = customerId;
+    public Customer(String firstName, String lastName, char gender, Date birthDate, int phone, int adressId, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
         this.phone = phone;
         this.adressId = adressId;
         this.email = email;
+        this.birthDate = birthDate;
         this.password = password;
     }
 

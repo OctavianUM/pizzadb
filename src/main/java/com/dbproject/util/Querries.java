@@ -6,6 +6,7 @@ import java.util.List;
 import org.hibernate.Session;
 
 import com.dbproject.domain.Adress;
+import com.dbproject.domain.Customer;
 import com.dbproject.domain.MenuItem;
 
 public class Querries {
@@ -24,6 +25,12 @@ public class Querries {
                 , MenuItem.class)
             .setParameter("id", id)
             .getResultList();
+    }
+
+    public static Customer getCustomerByEmail(Session session, String email){
+        return session.createSelectionQuery("FROM Customer WHERE email = :email", Customer.class)
+                    .setParameter("email", email)
+                    .uniqueResult();
     }
   
 

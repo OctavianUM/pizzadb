@@ -23,6 +23,7 @@ public class HibernateUtil {
                 .addAnnotatedClass(Adress.class)
                 .addAnnotatedClass(Menu.class)
                 .addAnnotatedClass(MenuItem.class)
+                .addAnnotatedClass(Customer.class)
                 // use database
                 .setProperty(JAKARTA_JDBC_URL, "jdbc:mysql://localhost:3306/pizzadb")
                 .setProperty(JAKARTA_JDBC_USER, "root")
