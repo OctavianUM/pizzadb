@@ -1,5 +1,7 @@
 package com.dbproject.domain;
 
+import org.hibernate.annotations.Generated;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
@@ -10,7 +12,7 @@ public class DiscountCode {
     private int discount;
 
     public DiscountCode(){}
-    public DiscountCode(int discountID, int discount) {
+    public DiscountCode( int discount) {
         this.discountID = discountID;
         this.discount = discount;
     }

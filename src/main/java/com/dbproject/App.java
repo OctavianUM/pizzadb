@@ -1,9 +1,11 @@
 package com.dbproject;
 
 import com.dbproject.dao.CustomerDAO;
+import com.dbproject.dao.MenuDOA;
 import com.dbproject.domain.Adress;
 import com.dbproject.domain.Customer;
 import com.dbproject.domain.MenuItem;
+import com.dbproject.test.CustomerTest;
 import com.dbproject.util.*;
 
 import java.sql.Date;
@@ -18,22 +20,9 @@ public class App {
         //initialize database connection when starting the program
         HibernateUtil.getSessionFactory();
 
-        CustomerDAO customerDAO = new CustomerDAO();
+        // CustomerTest.test_adding_login_deleting_customer();
+        MenuDOA.retrieveMenu(0).forEach(e -> System.out.println(e.getName()));
 
-        String email = "johndoe@example.com";
-        String password = "johndoe";
-        
-        if (customerDAO.customerExists(email)) {
-            System.out.println(
-                customerDAO.validateLogin(email, password)? "successfull login" : "wrong password"
-            );
-            
-        } else {    
-            System.out.println("customer does not exist: creating new one");
-            Customer customer = new Customer("John", "Doe", 'M',new Date(01052005), 12345678, 1, email, password);
-    
-            customerDAO.saveCustomer(customer);
-        }
 
         HibernateUtil.shutdown();
     }

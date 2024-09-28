@@ -21,9 +21,16 @@ public class HibernateUtil {
         try {
             return new Configuration()
                 .addAnnotatedClass(Adress.class)
+                .addAnnotatedClass(Courier.class)
+                .addAnnotatedClass(Customer.class)
+                .addAnnotatedClass(Delivery.class)
+                .addAnnotatedClass(DiscountCode.class)
+                .addAnnotatedClass(Ingredient.class)
                 .addAnnotatedClass(Menu.class)
                 .addAnnotatedClass(MenuItem.class)
-                .addAnnotatedClass(Customer.class)
+                .addAnnotatedClass(Order.class)
+                .addAnnotatedClass(OrderItem.class)
+                .addAnnotatedClass(Recipe.class)
                 // use database
                 .setProperty(JAKARTA_JDBC_URL, "jdbc:mysql://localhost:3306/pizzadb")
                 .setProperty(JAKARTA_JDBC_USER, "root")

@@ -1,5 +1,8 @@
 package com.dbproject.domain;
 
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.NaturalId;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
@@ -16,9 +19,7 @@ public class Courier {
 
     Courier(){}
 
-    public Courier(int courierID, short postal, String status, String timeLastDelivery) {
-
-        this.courierID = courierID;
+    public Courier(short postal, String status, String timeLastDelivery) {
         this.postal = postal;
         this.status = status;
         this.timeLastDelivery = timeLastDelivery;

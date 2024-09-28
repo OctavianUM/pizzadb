@@ -47,4 +47,13 @@ public class CustomerDAO {
             session.persist( customer);
         });
     }
+    
+    // Method to delete a customer with a hashed password
+    public void removeCustomer(String email) {
+        if(customerExists(email)){
+            HibernateUtil.getSessionFactory().inTransaction(session ->{
+                session.remove(Querries.getCustomerByEmail(session, email));
+            });
+        }
+    }
 }

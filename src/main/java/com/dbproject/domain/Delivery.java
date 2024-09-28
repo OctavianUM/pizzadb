@@ -1,5 +1,7 @@
 package com.dbproject.domain;
 
+import org.hibernate.annotations.Generated;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
@@ -11,8 +13,7 @@ public class Delivery {
     private int courierId;
 
     public Delivery(){}
-    public Delivery(int deliveryId, int orderId, int courierId) {
-        this.deliveryId = deliveryId;
+    public Delivery(int orderId, int courierId) {
         this.orderId = orderId;
         this.courierId = courierId;
     }

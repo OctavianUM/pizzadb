@@ -1,6 +1,8 @@
 package com.dbproject.domain;
 
+import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.NamedQuery;
+import org.hibernate.annotations.NaturalId;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -8,14 +10,15 @@ import jakarta.persistence.Id;
 @Entity
 public class MenuItem {
     @Id
+    @Generated
     private int menuItemId;
+    @NaturalId
     private String name;
     private String type;
     private String description;
 
     public MenuItem(){}
-    public MenuItem(int menuItemId, String name, String type, String description) {
-        this.menuItemId = menuItemId;
+    public MenuItem(String name, String type, String description) {
         this.name = name;
         this.type = type;
         this.description = description;

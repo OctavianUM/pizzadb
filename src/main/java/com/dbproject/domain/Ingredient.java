@@ -1,19 +1,23 @@
 package com.dbproject.domain;
 
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.NaturalId;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
 @Entity
 public class Ingredient {
     @Id
+    @Generated
     private int ingredientId;
+    @NaturalId
     private String name;
     private int dietary;
     private double price;
 
     public Ingredient(){}
-    public Ingredient(int ingredientId, String name, int dietary, double price) {
-        this.ingredientId = ingredientId;
+    public Ingredient(String name, int dietary, double price) {
         this.name = name;
         this.dietary = dietary;
         this.price = price;

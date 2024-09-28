@@ -1,9 +1,12 @@
 package com.dbproject.domain;
 
+import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.NamedQuery;
+import org.hibernate.annotations.NaturalId;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+
 
 
 @NamedQuery(
@@ -15,18 +18,19 @@ import jakarta.persistence.Id;
 
 @Entity
 public class Adress {
-    @Id
+    @Id 
+    @Generated
     private long adressId;
-
-    
+    @NaturalId
     private short postal;
+    @NaturalId
     private String street;
+    @NaturalId
     private int number;
 
     Adress() {}
 
-    public Adress(long adressId, short postal, String street, int number) {
-        this.adressId = adressId;
+    public Adress( short postal, String street, int number) {
         this.postal = postal;
         this.street = street;
         this.number = number;

@@ -1,5 +1,7 @@
 package com.dbproject.domain;
 
+import org.hibernate.annotations.Generated;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
@@ -13,8 +15,7 @@ public class Order {
     private  String status;
 
     public Order(){}
-    public Order(int orderId, int customerId, String orderTime, int discountId, String status) {
-        this.orderId = orderId;
+    public Order(int customerId, String orderTime, int discountId, String status) {
         this.customerId = customerId;
         this.orderTime = orderTime;
         this.discountId = discountId;
