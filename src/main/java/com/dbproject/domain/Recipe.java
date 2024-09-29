@@ -1,9 +1,13 @@
 package com.dbproject.domain;
 
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name="recipe")
 public class Recipe {
     @Id
     private int menuItemId;

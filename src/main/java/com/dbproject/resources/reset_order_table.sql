@@ -1,0 +1,1 @@
+delete from `order`; alter table `order` auto_increment = 0; select * from `order`;

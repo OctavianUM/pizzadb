@@ -1,25 +1,35 @@
 package com.dbproject.domain;
 
 import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.NaturalId;
+
+import com.dbproject.util.OrderStatus;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
+@Table(name="[Order]") //enclosed in brackets to prevent the sql command ORDER to override the table name
 public class Order {
     @Id
+    @Generated
     private int orderId;
+    @NaturalId
     private int customerId;
+    @NaturalId
     private String orderTime;
     private int discountId;
     private  String status;
 
     public Order(){}
-    public Order(int customerId, String orderTime, int discountId, String status) {
+    public Order(int customerId, LocalDateTime dateTime, int discountId, OrderStatus status) {
         this.customerId = customerId;
-        this.orderTime = orderTime;
+        this.orderTime = dateTime.format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"));
         this.discountId = discountId;
-        this.status = status;
+        this.status = status.toString();
     }
 
     public int getOrderId() {

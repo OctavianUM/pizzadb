@@ -87,7 +87,7 @@ CREATE TABLE `customer` (
   UNIQUE KEY `email` (`email`),
   KEY `adressID` (`adressID`),
   CONSTRAINT `customer_ibfk_1` FOREIGN KEY (`adressID`) REFERENCES `adress` (`adressId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -96,6 +96,7 @@ CREATE TABLE `customer` (
 
 LOCK TABLES `customer` WRITE;
 /*!40000 ALTER TABLE `customer` DISABLE KEYS */;
+INSERT INTO `customer` VALUES (1,'John','Doe','M',12345678,1,'1970-01-01','johndoe@example.com','c2713b62c903791bdefc5a6a99df04d4330de491bbc7a0ca6a5007337e4a6028');
 /*!40000 ALTER TABLE `customer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -138,7 +139,7 @@ CREATE TABLE `discountcode` (
   `discountID` int NOT NULL AUTO_INCREMENT,
   `discount` int NOT NULL,
   PRIMARY KEY (`discountID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -147,6 +148,7 @@ CREATE TABLE `discountcode` (
 
 LOCK TABLES `discountcode` WRITE;
 /*!40000 ALTER TABLE `discountcode` DISABLE KEYS */;
+INSERT INTO `discountcode` VALUES (1,10);
 /*!40000 ALTER TABLE `discountcode` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -323,4 +325,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-09-27 19:46:02
+-- Dump completed on 2024-09-29 14:50:59

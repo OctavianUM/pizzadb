@@ -20,6 +20,7 @@ public class HibernateUtil {
     private static SessionFactory buildSessionFactory() {
         try {
             return new Configuration()
+                .addAnnotatedClass(Recipe.class)
                 .addAnnotatedClass(Adress.class)
                 .addAnnotatedClass(Courier.class)
                 .addAnnotatedClass(Customer.class)
@@ -30,7 +31,6 @@ public class HibernateUtil {
                 .addAnnotatedClass(MenuItem.class)
                 .addAnnotatedClass(Order.class)
                 .addAnnotatedClass(OrderItem.class)
-                .addAnnotatedClass(Recipe.class)
                 // use database
                 .setProperty(JAKARTA_JDBC_URL, "jdbc:mysql://localhost:3306/pizzadb")
                 .setProperty(JAKARTA_JDBC_USER, "root")

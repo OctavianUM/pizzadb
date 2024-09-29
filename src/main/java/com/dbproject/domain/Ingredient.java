@@ -13,11 +13,11 @@ public class Ingredient {
     private int ingredientId;
     @NaturalId
     private String name;
-    private int dietary;
+    private String dietary;
     private double price;
 
     public Ingredient(){}
-    public Ingredient(String name, int dietary, double price) {
+    public Ingredient(String name, String dietary, double price) {
         this.name = name;
         this.dietary = dietary;
         this.price = price;
@@ -39,11 +39,11 @@ public class Ingredient {
         this.name = name;
     }
 
-    public int getDietary() {
+    public String getDietary() {
         return dietary;
     }
 
-    public void setDietary(int dietary) {
+    public void setDietary(String dietary) {
         this.dietary = dietary;
     }
 
