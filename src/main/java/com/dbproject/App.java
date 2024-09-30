@@ -1,5 +1,6 @@
 package com.dbproject;
 
+import com.dbproject.dao.CourierDAO;
 import com.dbproject.dao.CustomerDAO;
 import com.dbproject.dao.MenuDAO;
 import com.dbproject.dao.OrderDAO;
@@ -28,12 +29,12 @@ public class App {
         // MenuDOA.retrieveMenu(0).forEach(e -> System.out.println(e.getName()));
         // MenuDOA.getMenuItemIngredients(1).forEach(e -> System.out.println(e.getName()));\
         
-        Order order = new Order(1,  LocalDateTime.now(), 1, OrderStatus.PENDING);
+        // Order order = new Order(1,  LocalDateTime.now(), 1, OrderStatus.PENDING);
         
-        System.out.println("order created with id = "+OrderDAO.createOrder(order));
-        OrderDAO.getOrderByID(1);
+        // System.out.println("order created with id = "+ OrderDAO.createOrder(order));
+        // OrderDAO.getOrderByID(1);
 
-        
+        CourierDAO.getAvailableCouriers(1002).forEach(e -> System.out.println(e.getCourierID()));
 
 
         HibernateUtil.shutdown();

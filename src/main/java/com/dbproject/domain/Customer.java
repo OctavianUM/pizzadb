@@ -23,6 +23,12 @@ public class Customer {
     private String password;
     private Date birthDate;
 
+    public Date getBirthDate() {
+        return birthDate;
+    }
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
+    }
     public Customer(){}
     public Customer(String firstName, String lastName, char gender, Date birthDate, int phone, int adressId, String email, String password) {
         this.firstName = firstName;

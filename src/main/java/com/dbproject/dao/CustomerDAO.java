@@ -1,6 +1,9 @@
 package com.dbproject.dao;
 
 
+import org.hibernate.Transaction;
+
+import com.dbproject.domain.Adress;
 import com.dbproject.domain.Customer;
 import com.dbproject.util.HibernateUtil;
 import com.dbproject.util.PasswordEncrypt;
@@ -54,6 +57,30 @@ public class CustomerDAO {
             HibernateUtil.getSessionFactory().inTransaction(session ->{
                 session.remove(Querries.getCustomerByEmail(session, email));
             });
+        }
+    }
+
+    public static Customer getCustomerById(int id){
+        var sessionFactory = HibernateUtil.getSessionFactory();
+        var session = sessionFactory.openSession();
+        try {
+            return Querries.getCustomerById(session, id);
+        } finally {
+            
+            session.close();
+        }
+    }
+
+    
+
+    public static Adress getCustomerAdress(int id){
+        var sessionFactory = HibernateUtil.getSessionFactory();
+        var session = sessionFactory.openSession();
+        try { 
+            return Querries.getCustomerAdress(session, id);
+        } finally {
+            
+            session.close();
         }
     }
 }

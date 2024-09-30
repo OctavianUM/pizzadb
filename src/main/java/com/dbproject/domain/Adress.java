@@ -6,6 +6,7 @@ import org.hibernate.annotations.NaturalId;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 
 
@@ -17,6 +18,7 @@ import jakarta.persistence.Id;
 )
 
 @Entity
+@Table(name="[Adress]")
 public class Adress {
     @Id 
     @Generated
