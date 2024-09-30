@@ -1,6 +1,9 @@
 package com.dbproject.dao;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.hibernate.Hibernate;
 
@@ -54,6 +57,30 @@ public class MenuDAO {
         var session = sessionFactory.openSession();
         try {
             return (ArrayList) Querries.getMenuItemIngredients(session, menuItemId);
+        } finally {
+            session.close();
+        } 
+    }
+
+    public static void printMenu(int id){
+        var sessionFactory = HibernateUtil.getSessionFactory();
+        var session = sessionFactory.openSession();
+        try {
+            List<Object[]> menu = Querries.getMenu(session, id);
+            
+            System.out.printf("%-10s %-30s %-90s %-11s %-10s%n", "ID", "Name", "Ingredients", "Total Price", "Dietary");
+            System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+
+            // Loop through the array and print each item
+            for (Object[] item : menu) {
+                System.out.printf("%-10s %-30s %-90s $%-11s %-10s%n",
+                        item[0], // Menu Item ID
+                        item[1], // Menu Item Name
+                        item[2], // Ingredients
+                        item[3], // Total Price
+                        item[4]); // Dietary
+            }
+
         } finally {
             session.close();
         } 

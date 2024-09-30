@@ -34,8 +34,9 @@ public class App {
         // System.out.println("order created with id = "+ OrderDAO.createOrder(order));
         // OrderDAO.getOrderByID(1);
 
-        CourierDAO.getAvailableCouriers(1002).forEach(e -> System.out.println(e.getCourierID()));
+        // CourierDAO.getAvailableCouriers(1002).forEach(e -> System.out.println(e.getCourierID()));
 
+        MenuDAO.printMenu(0);
 
         HibernateUtil.shutdown();
     }

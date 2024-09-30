@@ -28,6 +28,9 @@ public class DeliveryManager {
                 // expired: 
                 // courier status = DELIVERING
                 // courier set timelastdelivery
+
+
+                
         int postal = CustomerDAO.getCustomerAdress(order.getCustomerId()).getPostal();
         ArrayList<Courier> availableCouriers = (ArrayList<Courier>) CourierDAO.getAvailableCouriers(postal);
 

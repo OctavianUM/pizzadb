@@ -12,7 +12,7 @@ public class CustomerCLI {
     public static void customerAccount(){
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("\n\nDo you already have an existing account (Y/N)?");
+        System.out.print("\nDo you already have an existing account (Y/N)? ");
         String in = scanner.next().toLowerCase();
         switch (in) {
             case "y":
@@ -33,7 +33,8 @@ public class CustomerCLI {
         boolean successLogin = false;
 
         while (!successLogin) {
-            System.out.println("\n\nProvide your login information:");
+            System.out.println("\n======LOGIN MENU======");
+            System.out.println("Provide your login information:");
             System.out.print("email: ");
             String email = scanner.next();
     
@@ -46,7 +47,7 @@ public class CustomerCLI {
     }
 
     private static void create(Scanner scanner){
-        System.out.println("\n\nCreate a new account:");
+        System.out.println("\nCreate a new account:");
 
         Customer c = new Customer();
         System.out.print("first name: ");
@@ -100,3 +101,26 @@ public class CustomerCLI {
 
     }
 }
+
+
+// SELECT 
+//     mi.menuItemId,
+//     mi.name AS menuItemName,
+//     GROUP_CONCAT(i.name SEPARATOR ', ') AS ingredients,
+//     SUM(i.price * mii.amount) AS totalPrice,
+//     CASE
+//         WHEN SUM(CASE WHEN i.dietary = "Vegetarian" THEN 0 ELSE 1 END) > 0 THEN 'Vegan'
+//         ELSE 'Non-vegan'
+//     END AS Dietary
+// FROM 
+//     Menu m
+// JOIN 
+//     MenuItem mi ON m.menuItemId = mi.menuItemId
+// JOIN 
+//     Recipe mii ON mi.menuItemId = mii.menuItemId
+// JOIN 
+//     Ingredient i ON mii.ingredientId = i.ingredientId
+// WHERE 
+//     m.menuID = 0 
+// GROUP BY 
+//     mi.menuItemId, mi.name, mi.type, mi.description;

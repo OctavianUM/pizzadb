@@ -1,5 +1,6 @@
 package com.dbproject.util;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -98,4 +99,23 @@ public class Querries {
             .setParameter("postal", postal)
             .getResultList();
     }
-}
+
+    public static List<Object[]> getMenu(Session session, int id){
+        return session.createSelectionQuery(
+            "SELECT mi.menuItemId, mi.name AS menuItemName, " +
+            "GROUP_CONCAT(i.name) AS ingredients, " +
+            "SUM(i.price * r.amount) AS totalPrice, " +
+            "CASE WHEN SUM(CASE WHEN i.dietary = 'Vegetarian' THEN 0 ELSE 1 END) > 0 THEN 'Vegan' ELSE 'Non-vegan' END AS Dietary " +
+            "FROM Menu m "+
+            "JOIN MenuItem mi ON m.menuItemId = mi.menuItemId "+
+            "JOIN Recipe r ON mi.menuItemId = r.menuItemId "+
+            "JOIN Ingredient i ON r.ingredientId = i.ingredientId "+
+            "WHERE m.menuId = :id GROUP BY mi.menuItemId, mi.name",
+            Object[].class)
+            .setParameter("id", id)
+            .getResultList();
+    }
+
+ }
+
+
