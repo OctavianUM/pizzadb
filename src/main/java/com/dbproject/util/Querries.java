@@ -116,6 +116,30 @@ public class Querries {
             .getResultList();
     }
 
+    public static List<Object[]> getOrderItems(Session session, int orderId){
+        return
+        session.createSelectionQuery(
+            
+        "SELECT mi.name, oi.quantity, (SUM(i.price * r.amount) * oi.quantity) "+
+        "FROM OrderItem oi "+
+        "JOIN MenuItem mi ON oi.menuItemId = mi.menuItemId "+
+        "JOIN Recipe r ON mi.menuItemId = r.menuItemId "+
+        "JOIN Ingredient i ON r.ingredientId = i.ingredientId " +
+        "WHERE oi.orderId = :orderId " +
+        "GROUP BY mi.menuItemId, oi.quantity"
+            , Object[].class)
+            .setParameter("orderId", orderId)
+            .getResultList();
+    }
+    
+    // SELECT mi.name AS menuItemName, oi.quantity, (SUM(i.price * r.amount) * oi.quantity) AS Price
+    // FROM orderItem oi
+    // JOIN menuItem mi ON oi.menuItemId = mi.menuItemId
+    // JOIN recipe r ON mi.menuItemId = r.menuItemId
+    // JOIN ingredient i ON r.ingredientId = i.ingredientId
+    // WHERE oi.orderId = 1
+    // GROUP BY mi.menuItemId, oi.quantity;
+
  }
 
 

@@ -9,26 +9,24 @@ import com.dbproject.dao.CustomerDAO;
 import com.dbproject.domain.Customer;
 
 public class CustomerCLI {
-    public static void customerAccount(){
+    public static int customerAccount(){
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("\nDo you already have an existing account (Y/N)? ");
         String in = scanner.next().toLowerCase();
         switch (in) {
             case "y":
-                login(scanner);
-                break;
+                return login(scanner);
             case "n":
                 create(scanner);
-                login(scanner);
-                break;
+                return login(scanner);
         
             default:
-                break;
+                return Integer.MIN_VALUE;
         }
     }
 
-    private static void login(Scanner scanner){
+    private static int login(Scanner scanner){
 
         boolean successLogin = false;
 
@@ -40,10 +38,14 @@ public class CustomerCLI {
     
             System.out.print("password: ");
             String pass = scanner.next();
-    
-            successLogin = new CustomerDAO().validateLogin(email, pass);
+
+            int id = new CustomerDAO().validateLogin(email, pass);
+            if(id > 0){
+                System.out.println("Succesfull login");
+                return id;
+            }
         }
-        System.out.println("Succesfull login");
+        return Integer.MIN_VALUE;
     }
 
     private static void create(Scanner scanner){

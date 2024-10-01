@@ -1,14 +1,16 @@
 package com.dbproject;
 
+import com.dbproject.cli.MenuCLI;
 import com.dbproject.dao.CourierDAO;
 import com.dbproject.dao.CustomerDAO;
 import com.dbproject.dao.MenuDAO;
 import com.dbproject.dao.OrderDAO;
+import com.dbproject.dao.OrderItemDAO;
 import com.dbproject.domain.Adress;
 import com.dbproject.domain.Customer;
 import com.dbproject.domain.MenuItem;
 import com.dbproject.domain.Order;
-import com.dbproject.test.CustomerTest;
+import com.dbproject.domain.OrderItem;
 import com.dbproject.util.*;
 
 import java.sql.Date;
@@ -36,7 +38,9 @@ public class App {
 
         // CourierDAO.getAvailableCouriers(1002).forEach(e -> System.out.println(e.getCourierID()));
 
-        MenuDAO.printMenu(0);
+        // MenuDAO.printMenu(0);
+        // OrderItemDAO.getOrderItems(2);
+        MenuCLI.showOrderInfo(2);
 
         HibernateUtil.shutdown();
     }

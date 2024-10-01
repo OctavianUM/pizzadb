@@ -1,52 +1,29 @@
 package com.dbproject.dao;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.dbproject.domain.Order;
+import com.dbproject.domain.OrderItem;
 import com.dbproject.util.HibernateUtil;
-import com.dbproject.util.PasswordEncrypt;
 import com.dbproject.util.Querries;
 
-public class OrderDAO {
-    public static int createOrder(Order order){
+import java.util.List;
+
+public class OrderItemDAO {
+    public static int createOrderItem(OrderItem item){
         var sessionFactory = HibernateUtil.getSessionFactory();
         var session = sessionFactory.openSession();
         try {
             Transaction transaction = session.beginTransaction();
 
-            int id = (int) session.save(order);
+            int id = (int) session.save(item);
             transaction.commit();
             return id;
         } finally {
             
             session.close();
         }
-    }
-
-    // public static boolean updateOrderStatus(){
-
-    // }
-
-    // public static boolean removeOrder(){
-
-    // }
-
-    // public static List<Order> getOrderByStatus(){
-
-    // }
-
-    public static Order getOrderByID(int orderId){
-        var sessionFactory = HibernateUtil.getSessionFactory();
-        var session = sessionFactory.openSession();
-        try {
-            return Querries.getOrderByID(session, orderId);
-        } finally {
-            session.close();
-        }
-
     }
 
     public static List<Object[]> getOrderItems(int orderId){
@@ -57,5 +34,6 @@ public class OrderDAO {
         } finally {
             session.close();
         }
+
     }
 }

@@ -10,28 +10,47 @@ import com.dbproject.dao.MenuDAO;
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int choice = 0;
-        int customerID = 0;
+        int customerID = Integer.MIN_VALUE;
 
         while (true) {
             System.out.println("\n====== MAIN MENU ======");
+            System.out.println("(Hidden) 0. admin");
             System.out.println("1. Login");
             System.out.println("2. Menu");
-            System.out.println("3. Exit");
-            System.out.println("(Hidden) 4. admin");
+            System.out.println("3. Track order");
+            System.out.println("4. Exit");
             System.out.print("Enter your choice: ");
             
             if (scanner.hasNextInt()) {
                 choice = scanner.nextInt();
                 
                 switch (choice) {
+                    case 0:
+                        adminMenu();
+                        break;
                     case 1:
-                        CustomerCLI.customerAccount();
+                        customerID = CustomerCLI.customerAccount();
                         break;
                     case 2:
-                        MenuCLI.createOrder(customerID);
-
+                        if(customerID > 0){
+                            int orderid = MenuCLI.openMenu(customerID);
+                            if(orderid > 0){
+                                //make the delivery
+                            } else {
+                                
+                            }
+                        }else{
+                            System.out.println("\nYou must login to access the menu");
+                        }
                         break;
                     case 3:
+                        System.out.print("\ntracking order id: ");
+                        int in = scanner.nextInt();
+                        System.out.print("\n====== ORDER TRACKING ======");
+                        MenuCLI.showOrderInfo(in);
+                        
+                        break;
+                    case 4:
                         System.out.println("Exiting...");
                         scanner.close();
                         System.exit(0);

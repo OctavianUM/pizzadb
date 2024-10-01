@@ -23,18 +23,19 @@ public class CustomerDAO {
     }
 
     // Method to validate login
-    public boolean validateLogin(String email, String password){
+    public int validateLogin(String email, String password){
         var sessionFactory = HibernateUtil.getSessionFactory();
         var session = sessionFactory.openSession();
 
         try {
             Customer customer = Querries.getCustomerByEmail(session, email);
 
-            if (customer != null) {
+            if (customer != null &&
+                PasswordEncrypt.checkPassword(password, customer.getPassword())){
                 // Step 2: Validate password with BCrypt
-                return PasswordEncrypt.checkPassword(password, customer.getPassword());
+                return customer.getCustomerId();
             } else {
-                return false;
+                return Integer.MIN_VALUE;
             }
         } finally {
             session.close();

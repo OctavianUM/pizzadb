@@ -39,7 +39,7 @@ public class HibernateUtil {
                 // use Agroal connection pool
                 .setProperty("hibernate.agroal.maxSize", 20)
                 // display SQL in console
-                .setProperty(SHOW_SQL, true)
+                .setProperty(SHOW_SQL, false)
                 .setProperty(FORMAT_SQL, true)
                 .setProperty(HIGHLIGHT_SQL, true)
                 .buildSessionFactory();
