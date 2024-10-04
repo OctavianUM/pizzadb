@@ -27,20 +27,7 @@ public class App {
         //initialize database connection when starting the program
         HibernateUtil.getSessionFactory();
 
-        // CustomerTest.test_adding_login_deleting_customer();
-        // MenuDOA.retrieveMenu(0).forEach(e -> System.out.println(e.getName()));
-        // MenuDOA.getMenuItemIngredients(1).forEach(e -> System.out.println(e.getName()));\
-        
-        // Order order = new Order(1,  LocalDateTime.now(), 1, OrderStatus.PENDING);
-        
-        // System.out.println("order created with id = "+ OrderDAO.createOrder(order));
-        // OrderDAO.getOrderByID(1);
-
-        // CourierDAO.getAvailableCouriers(1002).forEach(e -> System.out.println(e.getCourierID()));
-
-        // MenuDAO.printMenu(0);
-        // OrderItemDAO.getOrderItems(2);
-        MenuCLI.showOrderInfo(2);
+        MenuDAO.getTotalMenuItemsForMonthYear(10, 2024);
 
         HibernateUtil.shutdown();
     }

@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.hibernate.Hibernate;
+import org.hibernate.Session;
 
 import com.dbproject.domain.Customer;
 import com.dbproject.domain.Ingredient;
@@ -76,9 +77,32 @@ public class MenuDAO {
                 System.out.printf("%-10s %-30s %-90s $%-11s %-10s%n",
                         item[0], // Menu Item ID
                         item[1], // Menu Item Name
-                        item[2], // Ingredients
+                        item[2],
                         item[3], // Total Price
                         item[4]); // Dietary
+            }
+
+        } finally {
+            session.close();
+        } 
+    }
+
+    public static void getTotalMenuItemsForMonthYear(int month, int year){
+        var sessionFactory = HibernateUtil.getSessionFactory();
+        var session = sessionFactory.openSession();
+        try {
+            List<Object[]> objectList = Querries.getTotalMenuItemsForMonthYear(session, month, year);
+            
+            System.out.printf("%-30s %-10s %-10s %-10s%n",  "Name", "Quantity", "Price", "Total Price");
+            System.out.println("-------------------------------------------------------------------");
+
+            // Loop through the array and print each item
+            for (Object[] item : objectList) {
+                System.out.printf("%-30s %-10s %-10s $%-10s%n",
+                        item[0], 
+                        item[1], 
+                        item[3]
+                    );
             }
 
         } finally {

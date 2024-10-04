@@ -19,7 +19,7 @@ public class HibernateUtil {
  
     private static SessionFactory buildSessionFactory() {
         try {
-            return new Configuration()
+            SessionFactory sf = new Configuration()
                 .addAnnotatedClass(Recipe.class)
                 .addAnnotatedClass(Adress.class)
                 .addAnnotatedClass(Courier.class)
@@ -43,6 +43,8 @@ public class HibernateUtil {
                 .setProperty(FORMAT_SQL, true)
                 .setProperty(HIGHLIGHT_SQL, true)
                 .buildSessionFactory();
+            System.out.println("\nDATABASE CONNECTION SUCCESSFUL\n");
+            return sf;
         } catch (Throwable ex) {
             // Make sure you log the exception, as it might be swallowed
             System.err.println("Initial SessionFactory creation failed." + ex);

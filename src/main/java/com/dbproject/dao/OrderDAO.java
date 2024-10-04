@@ -7,6 +7,7 @@ import org.hibernate.Transaction;
 
 import com.dbproject.domain.Order;
 import com.dbproject.util.HibernateUtil;
+import com.dbproject.util.OrderStatus;
 import com.dbproject.util.PasswordEncrypt;
 import com.dbproject.util.Querries;
 
@@ -34,9 +35,16 @@ public class OrderDAO {
 
     // }
 
-    // public static List<Order> getOrderByStatus(){
+    public static List<Integer> getOrderByStatus(OrderStatus status){
+        var sessionFactory = HibernateUtil.getSessionFactory();
+        var session = sessionFactory.openSession();
+        try {
+            return Querries.getOrderByStatus(session, status);
+        } finally {
+            session.close();
+        }
 
-    // }
+    }
 
     public static Order getOrderByID(int orderId){
         var sessionFactory = HibernateUtil.getSessionFactory();

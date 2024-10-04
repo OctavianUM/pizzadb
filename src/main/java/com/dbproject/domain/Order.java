@@ -20,14 +20,14 @@ public class Order {
     @NaturalId
     private int customerId;
     @NaturalId
-    private String orderTime;
+    private LocalDateTime orderTime;
     private int discountId;
     private  String status;
 
     public Order(){}
     public Order(int customerId, LocalDateTime dateTime, int discountId, OrderStatus status) {
         this.customerId = customerId;
-        this.orderTime = dateTime.format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"));
+        this.orderTime = dateTime;
         this.discountId = discountId;
         this.status = status.toString();
     }
@@ -48,11 +48,11 @@ public class Order {
         this.customerId = customerId;
     }
 
-    public String getOrderTime() {
+    public LocalDateTime getOrderTime() {
         return orderTime;
     }
 
-    public void setOrderTime(String orderTime) {
+    public void setOrderTime(LocalDateTime orderTime) {
         this.orderTime = orderTime;
     }
 
