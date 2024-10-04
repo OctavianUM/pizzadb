@@ -19,15 +19,14 @@ public class Order {
     private int orderId;
     @NaturalId
     private int customerId;
-    @NaturalId
+    @Generated
     private LocalDateTime orderTime;
     private int discountId;
     private  String status;
 
     public Order(){}
-    public Order(int customerId, LocalDateTime dateTime, int discountId, OrderStatus status) {
+    public Order(int customerId, int discountId, OrderStatus status) {
         this.customerId = customerId;
-        this.orderTime = dateTime;
         this.discountId = discountId;
         this.status = status.toString();
     }

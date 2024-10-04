@@ -55,7 +55,7 @@ public class MenuCLI {
     }
 
     private static int placeOrder(int customerId, HashMap<Integer,Integer> menuItems){
-        Order order = new Order(customerId, LocalDateTime.now(), 1, OrderStatus.PENDING);
+        Order order = new Order(customerId, 1, OrderStatus.PENDING);
         int orderId = OrderDAO.createOrder(order);
 
         menuItems.forEach((key, val) -> {
