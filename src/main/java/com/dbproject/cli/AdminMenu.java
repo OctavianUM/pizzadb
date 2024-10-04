@@ -54,7 +54,6 @@ public class AdminMenu {
             ArrayList<Integer> orderIdList = (ArrayList) OrderDAO.getOrderByStatus(OrderStatus.PENDING);
             for (int orderId : orderIdList) {
                 List<Object[]> orderlist = OrderItemDAO.getOrderItems(orderId);
-                Order order = OrderDAO.getOrderByID(orderId);
 
                 System.out.println("\nID: "+ orderId);
 

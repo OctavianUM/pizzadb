@@ -115,8 +115,8 @@ public class Querries {
         return session.createSelectionQuery(
             "SELECT mi.menuItemId, mi.name AS menuItemName, " +
             "GROUP_CONCAT(i.name) AS ingredients, " +
-            "SUM(i.price * r.amount) AS totalPrice, " +
-            "CASE WHEN SUM(CASE WHEN i.dietary = 'Vegetarian' THEN 0 ELSE 1 END) > 0 THEN 'Vegan' ELSE 'Non-vegan' END AS Dietary " +
+            "SUM(i.price * r.amount * 1.40 * 1.09) AS totalPrice, " + //also adds vat + profit margin
+            "CASE WHEN SUM(CASE WHEN i.dietary = 'Vegetarian' THEN 0 ELSE 1 END) > 0 THEN 'Non-vegan' ELSE 'Vegan' END AS Dietary " +
             "FROM Menu m "+
             "JOIN MenuItem mi ON m.menuItemId = mi.menuItemId "+
             "JOIN Recipe r ON mi.menuItemId = r.menuItemId "+
@@ -131,7 +131,7 @@ public class Querries {
         return
         session.createSelectionQuery(
             
-        "SELECT mi.name, oi.quantity, (SUM(i.price * r.amount) * oi.quantity) "+
+        "SELECT mi.name, oi.quantity, (SUM(i.price * r.amount * 1.40 * 1.09) * oi.quantity) "+
         "FROM OrderItem oi "+
         "JOIN MenuItem mi ON oi.menuItemId = mi.menuItemId "+
         "JOIN Recipe r ON mi.menuItemId = r.menuItemId "+
@@ -161,7 +161,7 @@ public class Querries {
                 (
                     SELECT 
                         r.menuItemId AS menuItemId,
-                        SUM(i.price * r.amount) AS total_item_price
+                        SUM(i.price * r.amount  * 1.40 * 1.09) AS total_item_price
                     FROM 
                         Recipe r
                     JOIN 
