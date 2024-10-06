@@ -4,10 +4,13 @@ package com.dbproject.cli;
     import java.util.Scanner;
 
 import com.dbproject.dao.MenuDAO;
+import com.dbproject.util.HibernateUtil;
 
     public class HomeScreen {
 
     public static void main(String[] args) {
+        HibernateUtil.getSessionFactory();
+
         Scanner scanner = new Scanner(System.in);
         int choice = 0;
         int customerID = Integer.MIN_VALUE;
@@ -53,6 +56,7 @@ import com.dbproject.dao.MenuDAO;
                     case 4:
                         System.out.println("Exiting...");
                         scanner.close();
+                        HibernateUtil.shutdown();
                         System.exit(0);
                     default:
                         System.out.println("Invalid choice. Please select 1, 2, or 3.");
@@ -62,6 +66,8 @@ import com.dbproject.dao.MenuDAO;
                 scanner.next(); // Clear invalid input
             }
         }
+        
+        
     }
 
     public static void adminMenu() {
