@@ -89,6 +89,16 @@ public class Querries {
             .uniqueResult();
     }
 
+    public static List<Integer> getOrderByStatus(Session session, OrderStatus status){
+        return session.createSelectionQuery(
+            "SELECT o.orderId " +
+            "FROM Order o " +
+            "WHERE o.status = :status"
+            , Integer.class)
+            .setParameter("status", status.toString())
+            .getResultList();
+    }
+
     public static List<Courier> getAvailableCouriers(Session session, int postal){
         return session.createSelectionQuery(
             "SELECT c " +
@@ -101,6 +111,7 @@ public class Querries {
     }
 
     public static List<Object[]> getMenu(Session session, int id){
+        
         return session.createSelectionQuery(
             "SELECT mi.menuItemId, mi.name AS menuItemName, " +
             "GROUP_CONCAT(i.name) AS ingredients, " +
@@ -131,14 +142,46 @@ public class Querries {
             .setParameter("orderId", orderId)
             .getResultList();
     }
-    
-    // SELECT mi.name AS menuItemName, oi.quantity, (SUM(i.price * r.amount) * oi.quantity) AS Price
-    // FROM orderItem oi
-    // JOIN menuItem mi ON oi.menuItemId = mi.menuItemId
-    // JOIN recipe r ON mi.menuItemId = r.menuItemId
-    // JOIN ingredient i ON r.ingredientId = i.ingredientId
-    // WHERE oi.orderId = 1
-    // GROUP BY mi.menuItemId, oi.quantity;
+
+    public static List<Object[]> getTotalMenuItemsForMonthYear(Session session, int month, int year){
+        String query = 
+        """
+            SELECT 
+                mi.name,
+                SUM(oi.quantity) AS total_quantity_ordered,
+                recipe_cost.total_item_price AS menuitem_price,
+                (SUM(oi.quantity) * recipe_cost.total_item_price) AS total_price
+            FROM 
+                OrderItem oi
+            JOIN 
+                MenuItem mi ON oi.menuItemId = mi.menuItemId
+            JOIN 
+                Order o ON oi.orderId = o.orderId
+            JOIN 
+                (
+                    SELECT 
+                        r.menuItemId AS menuItemId,
+                        SUM(i.price * r.amount) AS total_item_price
+                    FROM 
+                        Recipe r
+                    JOIN 
+                        Ingredient i ON r.ingredientId = i.ingredientId
+                    GROUP BY 
+                        r.menuItemId
+                ) recipe_cost ON mi.menuItemId = recipe_cost.menuItemId
+            WHERE 
+                MONTH(o.orderTime) = :month
+                AND YEAR(o.orderTime) = :year
+            GROUP BY 
+                mi.menuItemId
+            ORDER BY 
+                total_quantity_ordered DESC
+            """;
+            return session.createSelectionQuery(query, Object[].class)
+            .setParameter("month", month)
+            .setParameter("year", year)
+            .getResultList();
+    }
 
  }
 

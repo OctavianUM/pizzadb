@@ -3,7 +3,10 @@ package com.dbproject.cli;
 
     import java.util.Scanner;
 
+import org.hibernate.Hibernate;
+
 import com.dbproject.dao.MenuDAO;
+import com.dbproject.util.HibernateUtil;
 import com.dbproject.util.HibernateUtil;
 
     public class HomeScreen {
@@ -29,7 +32,7 @@ import com.dbproject.util.HibernateUtil;
                 
                 switch (choice) {
                     case 0:
-                        adminMenu();
+                        AdminMenu.show();
                         break;
                     case 1:
                         customerID = CustomerCLI.customerAccount();
@@ -56,6 +59,7 @@ import com.dbproject.util.HibernateUtil;
                     case 4:
                         System.out.println("Exiting...");
                         scanner.close();
+                        HibernateUtil.shutdown();
                         HibernateUtil.shutdown();
                         System.exit(0);
                     default:
