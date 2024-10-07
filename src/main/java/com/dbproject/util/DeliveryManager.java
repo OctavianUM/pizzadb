@@ -1,49 +1,42 @@
 package com.dbproject.util;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import com.dbproject.dao.CourierDAO;
 import com.dbproject.dao.CustomerDAO;
+import com.dbproject.dao.DeliveryDAO;
 import com.dbproject.domain.Courier;
 import com.dbproject.domain.Order;
 import com.dbproject.domain.Delivery;
 
 public class DeliveryManager {
+    private final DeliveryDAO deliveryDAO;
 
     public DeliveryManager(){
 
+        this.deliveryDAO = new DeliveryDAO();
     }
 
-    public void Delivery(Order order){
-
-        //find a courier with a available status or waiting
-            //if not: send message "restaurant too busy, not taking orders"
-
-        //assign the order to this courier
-            //update courier status to waiting
-            //set 3 min timer -> 
-                // expired: 
-                // courier status = DELIVERING
-                // courier set timelastdelivery
-
-
-                
-        int postal = CustomerDAO.getCustomerAdress(order.getCustomerId()).getPostal();
-        ArrayList<Courier> availableCouriers = (ArrayList<Courier>) CourierDAO.getAvailableCouriers(postal);
-
-        if (availableCouriers != null) {
-            Courier courier = availableCouriers.getFirst();
-
-            Delivery delivery = new Delivery(order.getOrderId(), courier.getCourierID());
-            courier.setStatus(CourierStatus.WAITING.toString());
-
-            Executors.newScheduledThreadPool(1).schedule(() -> {
-                CourierDAO.updateCourierStatus(CourierStatus.DELIVERING);
-            }, 3, TimeUnit.MINUTES);
+    public void delivery(Order order) {
+        List<Courier> availableCouriers = CourierDAO.getAvailableCouriers(DeliveryDAO.getPostalCodeByOrderId(order.getOrderId()));
+        List<Courier> waitingCouriers = CourierDAO.getWaitingCouriers(DeliveryDAO.getPostalCodeByOrderId(order.getOrderId()));
+        if (!availableCouriers.isEmpty()) {
+            Courier courier = availableCouriers.get(0);
+            deliveryDAO.submitDelivery(new Delivery(order.getOrderId(), courier.getCourierID()));
+            CourierDAO.updateCourierStatus(courier, CourierStatus.WAITING);
         }
+        else if (!waitingCouriers.isEmpty()) {
+            Courier courier = waitingCouriers.get(0);
+            deliveryDAO.submitDelivery(new Delivery(order.getOrderId(), courier.getCourierID()));
+            CourierDAO.updateCourierStatus(courier,CourierStatus.WAITING);
+        }
+        else System.out.println("No couriers are available!");
+
+
     }
     
 }

@@ -53,7 +53,30 @@ public class MenuCLI {
         }
         return Integer.MIN_VALUE;
     }
+    public static int addDiscount(int orderid){
+        Scanner scanner = new Scanner(System.in);
 
+        MenuDAO.printMenu(0);
+        System.out.println("\nDo you have  a promo code?\n Y/N " );
+        String temp =scanner.next();
+        if (temp.toUpperCase().equals("Y")){
+            System.out.println("Enter promo code");
+            temp = scanner.next();{
+                switch (temp) {
+                    case "off20":
+                        return 2;
+                    case "off30":
+                        return 3;
+                    case "off50":
+                        return 4;
+                    default:
+                        return 1;
+                }
+            }
+        }
+        else return 1;
+
+    }
     private static int placeOrder(int customerId, HashMap<Integer,Integer> menuItems){
         Order order = new Order(customerId, 1, OrderStatus.PENDING);
         int orderId = OrderDAO.createOrder(order);

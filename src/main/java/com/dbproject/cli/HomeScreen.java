@@ -3,7 +3,12 @@ package com.dbproject.cli;
 
     import java.util.Scanner;
 
-import org.hibernate.Hibernate;
+    import com.dbproject.dao.CourierDAO;
+    import com.dbproject.dao.DeliveryDAO;
+    import com.dbproject.dao.OrderDAO;
+    import com.dbproject.util.DeliveryManager;
+    import com.dbproject.util.Querries;
+    import org.hibernate.Hibernate;
 
 import com.dbproject.dao.MenuDAO;
 import com.dbproject.util.HibernateUtil;
@@ -17,7 +22,8 @@ import com.dbproject.util.HibernateUtil;
         Scanner scanner = new Scanner(System.in);
         int choice = 0;
         int customerID = Integer.MIN_VALUE;
-
+        DeliveryManager deliveryManager = new DeliveryManager();
+        deliveryManager.delivery(OrderDAO.getOrderByID(1));
         while (true) {
             System.out.println("\n====== MAIN MENU ======");
             System.out.println("(Hidden) 0. admin");
@@ -40,6 +46,7 @@ import com.dbproject.util.HibernateUtil;
                     case 2:
                         if(customerID > 0){
                             int orderid = MenuCLI.openMenu(customerID);
+                            int discountid = MenuCLI.addDiscount(orderid);
                             if(orderid > 0){
                                 //make the delivery
                             } else {
