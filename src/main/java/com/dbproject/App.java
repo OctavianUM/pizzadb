@@ -3,6 +3,7 @@ package com.dbproject;
 import com.dbproject.cli.MenuCLI;
 import com.dbproject.dao.CourierDAO;
 import com.dbproject.dao.CustomerDAO;
+import com.dbproject.dao.DiscountDAO;
 import com.dbproject.dao.MenuDAO;
 import com.dbproject.dao.OrderDAO;
 import com.dbproject.dao.OrderItemDAO;
@@ -29,10 +30,8 @@ public class App {
         //initialize database connection when starting the program
         SessionFactory sf = HibernateUtil.getSessionFactory();
 
-        sf.inTransaction(session -> {
-            session.createMutationQuery("UPDATE Courier c SET c.status = 'AVAILABLE' where c.status = 'WAITING'")
-            .executeUpdate();
-        });
+        System.out.println(DiscountDAO.getDiscountCodeByString("OFF10").getDiscount());
+    
 
         HibernateUtil.shutdown();
     }

@@ -23,6 +23,7 @@ import com.dbproject.util.HibernateUtil;
         int choice = 0;
         int customerID = Integer.MIN_VALUE;
         DeliveryManager deliveryManager = new DeliveryManager();
+        //TODO: deliveries and bd-order
         deliveryManager.delivery(OrderDAO.getOrderByID(1));
         while (true) {
             System.out.println("\n====== MAIN MENU ======");
@@ -46,12 +47,7 @@ import com.dbproject.util.HibernateUtil;
                     case 2:
                         if(customerID > 0){
                             int orderid = MenuCLI.openMenu(customerID);
-                            int discountid = MenuCLI.addDiscount(orderid);
-                            if(orderid > 0){
-                                //make the delivery
-                            } else {
-                                
-                            }
+                            
                         }else{
                             System.out.println("\nYou must login to access the menu");
                         }

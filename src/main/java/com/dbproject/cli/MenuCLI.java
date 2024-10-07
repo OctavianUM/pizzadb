@@ -8,12 +8,15 @@ import java.util.Scanner;
 
 import java.util.ArrayList;
 
+import com.dbproject.dao.DiscountDAO;
 import com.dbproject.dao.MenuDAO;
 import com.dbproject.dao.OrderDAO;
 import com.dbproject.dao.OrderItemDAO;
+import com.dbproject.domain.DiscountCode;
 import com.dbproject.domain.Order;
 import com.dbproject.domain.OrderItem;
 import com.dbproject.util.OrderStatus;
+import com.dbproject.util.Querries;
 
 public class MenuCLI {
     public static int openMenu(int customerId){
@@ -29,6 +32,7 @@ public class MenuCLI {
             if(code == 0){
                 return Integer.MIN_VALUE;
             }else if(code == -1){
+                
                 int orderId = placeOrder(customerId, menuItems);
                 showOrderInfo(orderId);
                 return orderId;
@@ -53,32 +57,26 @@ public class MenuCLI {
         }
         return Integer.MIN_VALUE;
     }
-    public static int addDiscount(int orderid){
+    public static int addDiscount(){
         Scanner scanner = new Scanner(System.in);
 
         MenuDAO.printMenu(0);
-        System.out.println("\nDo you have  a promo code?\n Y/N " );
-        String temp =scanner.next();
-        if (temp.toUpperCase().equals("Y")){
-            System.out.println("Enter promo code");
-            temp = scanner.next();{
-                switch (temp) {
-                    case "off20":
-                        return 2;
-                    case "off30":
-                        return 3;
-                    case "off50":
-                        return 4;
-                    default:
-                        return 1;
-                }
-            }
+        System.out.println("\nDo you have  a promo code? " );
+        String discountString = scanner.next();
+
+        DiscountCode dc = DiscountDAO.getDiscountCodeByString( discountString);
+        if (dc != null && !dc.getIsUsed()){
+            DiscountDAO.setUsed(dc.getDiscountID());
+            return dc.getDiscountID();
+        }else{
+            System.out.println("\ninvalid discount code");
         }
-        else return 1;
+        return 0;
 
     }
     private static int placeOrder(int customerId, HashMap<Integer,Integer> menuItems){
-        Order order = new Order(customerId, 1, OrderStatus.PENDING);
+        int code = addDiscount();
+        Order order = new Order(customerId, code, OrderStatus.PENDING);
         int orderId = OrderDAO.createOrder(order);
 
         menuItems.forEach((key, val) -> {
@@ -122,7 +120,10 @@ public class MenuCLI {
             );
             total += (double)item[2];
         }
-        System.out.println("\nTOTAL: " + total);
+
+        int dc = DiscountDAO.getDiscountCodeById(order.getDiscountId()).getDiscount();
+        System.out.println("\nDISCOUNT: "+dc);
+        System.out.println("\nTOTAL: " + total*(1.0-dc/10.0));
 
     }
 }

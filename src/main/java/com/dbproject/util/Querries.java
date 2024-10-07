@@ -9,6 +9,7 @@ import org.hibernate.Session;
 import com.dbproject.domain.Adress;
 import com.dbproject.domain.Courier;
 import com.dbproject.domain.Customer;
+import com.dbproject.domain.DiscountCode;
 import com.dbproject.domain.Ingredient;
 import com.dbproject.domain.MenuItem;
 import com.dbproject.domain.Order;
@@ -108,7 +109,7 @@ public class Querries {
                 .uniqueResult();
     }
     public static void updateCourierTimeLastDelivery(Session session, int courierID) {
-        session.createQuery("UPDATE Courier " +
+        session.createMutationQuery("UPDATE Courier " +
                         "SET timeLastDelivery = CURRENT_TIMESTAMP " +
                         "WHERE courierID = :courierID")
                 .setParameter("courierID", courierID)
@@ -171,6 +172,8 @@ public class Querries {
             .getResultList();
     }
 
+
+    //TODO: change to get all deliveries and orders + discountcode
     public static List<Object[]> getTotalMenuItemsForMonthYear(Session session, int month, int year){
         String query = 
         """
@@ -209,6 +212,56 @@ public class Querries {
             .setParameter("month", month)
             .setParameter("year", year)
             .getResultList();
+    }
+
+    public static List<Object[]> getTotalDeliveriesMonth(Session session, int month, int year){
+        String query = 
+        """
+            SELECT oi.menuItemId
+            FROM Delivery d 
+            JOIN (
+                    SELECT 
+                        r.menuItemId AS menuItemId,
+                        SUM(i.price * r.amount  * 1.40 * 1.09) AS total_item_price
+                    FROM 
+                        Recipe r
+                    JOIN 
+                        Ingredient i ON r.ingredientId = i.ingredientId
+                    GROUP BY 
+                        r.menuItemId
+                ) recipe_cost ON mi.menuItemId = recipe_cost.menuItemId
+            JOIN OrderItem oi ON d.orderId = oi.orderId 
+            JOIN Order o ON d.orderId = o.orderId 
+            WHERE MONTH(o.orderTime) = :month AND YEAR(o.orderTime) = :year
+            """;
+            return session.createSelectionQuery(query, Object[].class)
+            .setParameter("month", month)
+            .setParameter("year", year)
+            .getResultList();
+    }
+
+    public static DiscountCode getDiscountCodeByString(Session session, String discountString) {
+        return session.createSelectionQuery(
+                "SELECT dc "+
+                "FROM DiscountCode dc "+
+                "WHERE dc.discountString  = :str", 
+                DiscountCode.class)
+                .setParameter("str", discountString)
+                .uniqueResult();
+    }
+
+    public static DiscountCode getDiscountCodeById(Session session, int discountId) {
+        return session.createSelectionQuery(
+                "SELECT dc "+
+                "FROM DiscountCode dc "+
+                "WHERE dc.discountID  = :id", 
+                DiscountCode.class)
+                .setParameter("id", discountId)
+                .uniqueResult();    
+    }
+
+    public static void setDicountAsUsed(Session session, int dcid) {
+        session.createMutationQuery("UPDATE DiscountCode dc SET dc.isUsed = true WHERE dc.discountID = :dcid").setParameter("dcid", dcid).executeUpdate();
     }
 
  }

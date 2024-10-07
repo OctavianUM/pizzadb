@@ -34,7 +34,7 @@ public class HibernateUtil {
                 // use database
                 .setProperty(JAKARTA_JDBC_URL, "jdbc:mysql://localhost:3306/pizzadb")
                 .setProperty(JAKARTA_JDBC_USER, "root")
-                .setProperty(JAKARTA_JDBC_PASSWORD, "octavian007")
+                .setProperty(JAKARTA_JDBC_PASSWORD, "password")
                 .setProperty(JAKARTA_JDBC_DRIVER, "com.mysql.cj.jdbc.Driver")
                 // use Agroal connection pool
                 .setProperty("hibernate.agroal.maxSize", 20)
