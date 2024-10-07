@@ -98,16 +98,44 @@ public class Querries {
             .setParameter("status", status.toString())
             .getResultList();
     }
+    public static Short getPostalCodeOrderByOrderId(Session session, int orderId) {
+        return session.createSelectionQuery("SELECT a.postal " +
+                "FROM Order o " +
+                "JOIN Customer c ON o.customerId = c.customerId " +
+                "JOIN Adress  a ON c.adressId = a.adressId " +
+                "WHERE o.orderId = :orderID", Short.class)
+                .setParameter("orderID", orderId)
+                .uniqueResult();
+    }
+    public static void updateCourierTimeLastDelivery(Session session, int courierID) {
+        session.createQuery("UPDATE Courier " +
+                        "SET timeLastDelivery = CURRENT_TIMESTAMP " +
+                        "WHERE courierID = :courierID")
+                .setParameter("courierID", courierID)
+                .executeUpdate();
+        session.flush();
+    }
+
 
     public static List<Courier> getAvailableCouriers(Session session, int postal){
         return session.createSelectionQuery(
             "SELECT c " +
             "FROM Courier c " +
             "WHERE c.postal = :postal "+
-            "AND c.status IN ('AVAILABLE','WAITING')"
+            "AND c.status IN ('AVAILABLE')"
             , Courier.class)
             .setParameter("postal", postal)
             .getResultList();
+    }
+    public static List<Courier> getWaitingCouriers(Session session, int postal){
+        return session.createSelectionQuery(
+                        "SELECT c " +
+                                "FROM Courier c " +
+                                "WHERE c.postal = :postal "+
+                                "AND c.status IN ('WAITING')"
+                        , Courier.class)
+                .setParameter("postal", postal)
+                .getResultList();
     }
 
     public static List<Object[]> getMenu(Session session, int id){

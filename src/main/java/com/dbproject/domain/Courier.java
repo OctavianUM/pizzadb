@@ -6,6 +6,8 @@ import org.hibernate.annotations.NaturalId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
+import java.time.LocalDateTime;
+
 @Entity
 public class Courier {
     @Id
@@ -15,11 +17,11 @@ public class Courier {
 
     private String status;
 
-    private String timeLastDelivery;
+    private LocalDateTime timeLastDelivery;
 
     Courier(){}
 
-    public Courier(short postal, String status, String timeLastDelivery) {
+    public Courier(short postal, String status, LocalDateTime timeLastDelivery) {
         this.postal = postal;
         this.status = status;
         this.timeLastDelivery = timeLastDelivery;
@@ -36,7 +38,7 @@ public class Courier {
         return status;
     }
 
-    public String getTimeLastDelivery() {
+    public LocalDateTime getTimeLastDelivery() {
         return timeLastDelivery;
     }
 
@@ -52,7 +54,7 @@ public class Courier {
         this.status = status;
     }
 
-    public void setTimeLastDelivery(String timeLastDelivery) {
+    public void setTimeLastDelivery(LocalDateTime timeLastDelivery) {
         this.timeLastDelivery = timeLastDelivery;
     }
 }
