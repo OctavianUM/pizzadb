@@ -117,7 +117,7 @@ CREATE TABLE `delivery` (
   KEY `courierID` (`courierID`),
   CONSTRAINT `delivery_ibfk_1` FOREIGN KEY (`orderID`) REFERENCES `order` (`orderID`),
   CONSTRAINT `delivery_ibfk_2` FOREIGN KEY (`courierID`) REFERENCES `courier` (`courierID`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -126,7 +126,6 @@ CREATE TABLE `delivery` (
 
 LOCK TABLES `delivery` WRITE;
 /*!40000 ALTER TABLE `delivery` DISABLE KEYS */;
-INSERT INTO `delivery` VALUES (1,1,3),(2,1,3);
 /*!40000 ALTER TABLE `delivery` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -152,7 +151,7 @@ CREATE TABLE `discountcode` (
 
 LOCK TABLES `discountcode` WRITE;
 /*!40000 ALTER TABLE `discountcode` DISABLE KEYS */;
-INSERT INTO `discountcode` VALUES (1,10,'OFF10',1);
+INSERT INTO `discountcode` VALUES (1,10,'OFF10',0);
 /*!40000 ALTER TABLE `discountcode` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -252,7 +251,7 @@ CREATE TABLE `order` (
   CONSTRAINT `fk_discount` FOREIGN KEY (`discountID`) REFERENCES `discountcode` (`discountID`),
   CONSTRAINT `order_ibfk_1` FOREIGN KEY (`customerID`) REFERENCES `customer` (`customerID`),
   CONSTRAINT `order_ibfk_2` FOREIGN KEY (`discountID`) REFERENCES `discountcode` (`discountID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -261,7 +260,6 @@ CREATE TABLE `order` (
 
 LOCK TABLES `order` WRITE;
 /*!40000 ALTER TABLE `order` DISABLE KEYS */;
-INSERT INTO `order` VALUES (1,3,'2024-10-04 10:59:33',1,'PENDING'),(2,3,'2024-10-07 11:17:18',1,'PENDING'),(3,3,'2024-10-07 13:21:15',1,'PENDING');
 /*!40000 ALTER TABLE `order` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -282,7 +280,7 @@ CREATE TABLE `orderitem` (
   KEY `orderID` (`orderID`),
   CONSTRAINT `orderitem_ibfk_1` FOREIGN KEY (`menuItemID`) REFERENCES `menuitem` (`menuItemID`),
   CONSTRAINT `orderitem_ibfk_2` FOREIGN KEY (`orderID`) REFERENCES `order` (`orderID`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -291,7 +289,6 @@ CREATE TABLE `orderitem` (
 
 LOCK TABLES `orderitem` WRITE;
 /*!40000 ALTER TABLE `orderitem` DISABLE KEYS */;
-INSERT INTO `orderitem` VALUES (1,1,1,5),(2,1,3,15),(3,1,21,3),(4,1,2,1),(5,1,1,1);
 /*!40000 ALTER TABLE `orderitem` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -332,4 +329,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-07 15:24:36
+-- Dump completed on 2024-10-07 17:32:57

@@ -23,8 +23,8 @@ import com.dbproject.util.HibernateUtil;
         int choice = 0;
         int customerID = Integer.MIN_VALUE;
         DeliveryManager deliveryManager = new DeliveryManager();
-        //TODO: deliveries and bd-order
-        deliveryManager.delivery(OrderDAO.getOrderByID(1));
+        // //TODO: deliveries and bd-order
+        // deliveryManager.delivery(OrderDAO.getOrderByID(1));
         while (true) {
             System.out.println("\n====== MAIN MENU ======");
             System.out.println("(Hidden) 0. admin");

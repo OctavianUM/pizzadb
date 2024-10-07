@@ -173,7 +173,7 @@ public class Querries {
     }
 
 
-    //TODO: change to get all deliveries and orders + discountcode
+    //disclaimer: GPT helped with this one
     public static List<Object[]> getTotalMenuItemsForMonthYear(Session session, int month, int year){
         String query = 
         """
@@ -181,13 +181,15 @@ public class Querries {
                 mi.name,
                 SUM(oi.quantity) AS total_quantity_ordered,
                 recipe_cost.total_item_price AS menuitem_price,
-                (SUM(oi.quantity) * recipe_cost.total_item_price) AS total_price
+                ((SUM(oi.quantity) * recipe_cost.total_item_price) * d.discount) AS discounted_total_price
             FROM 
                 OrderItem oi
             JOIN 
                 MenuItem mi ON oi.menuItemId = mi.menuItemId
             JOIN 
                 Order o ON oi.orderId = o.orderId
+            JOIN 
+                DiscountCode d ON o.discountId = d.discountID
             JOIN 
                 (
                     SELECT 
@@ -204,7 +206,7 @@ public class Querries {
                 MONTH(o.orderTime) = :month
                 AND YEAR(o.orderTime) = :year
             GROUP BY 
-                mi.menuItemId
+                mi.menuItemId, d.discount
             ORDER BY 
                 total_quantity_ordered DESC
             """;
