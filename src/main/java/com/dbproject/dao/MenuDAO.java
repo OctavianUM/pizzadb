@@ -97,13 +97,26 @@ public class MenuDAO {
             System.out.println("-------------------------------------------------------------------");
 
             // Loop through the array and print each item
+            double total_item_price = 0;
             for (Object[] item : objectList) {
                 System.out.printf("%-30s %-10s %-10s $%-10s%n",
                         item[0], 
                         item[1], 
+                        item[2],
                         item[3]
                     );
+                total_item_price += (double) item[3];
             }
+
+            
+            double vat = total_item_price - total_item_price / 1.09;
+            double profit = total_item_price -(total_item_price / 1.09)/ 1.4;
+
+            System.out.println("\nTotal profit: " + profit );
+            System.out.println("\nTotal VAT: " + vat );
+            System.out.println("\nTotal combined: " + (total_item_price - vat - profit));
+
+            System.out.println("\nTotal combined: " + total_item_price);
 
         } finally {
             session.close();

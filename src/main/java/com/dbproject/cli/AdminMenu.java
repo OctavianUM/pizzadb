@@ -1,9 +1,12 @@
 package com.dbproject.cli;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import com.dbproject.dao.MenuDAO;
 import com.dbproject.dao.OrderDAO;
 import com.dbproject.dao.OrderItemDAO;
 import com.dbproject.domain.Order;
@@ -28,7 +31,9 @@ public class AdminMenu {
                 switch (choice) {
                     case 1:
                         System.out.println("\n====== EARNINGS REPORT ======");
+                        MenuDAO.getTotalMenuItemsForMonthYear(LocalDate.now().getMonthValue(),LocalDate.now().getYear());
                         break;
+                        
                     case 2:
                         System.out.println("\n====== ORDER LISTING ======");
                         showOrderInfo(OrderStatus.PENDING);

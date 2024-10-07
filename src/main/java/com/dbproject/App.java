@@ -16,6 +16,8 @@ import com.dbproject.util.*;
 import java.sql.Date;
 import java.util.*;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -25,9 +27,12 @@ public class App {
     
     public static void main(String[] args) {
         //initialize database connection when starting the program
-        HibernateUtil.getSessionFactory();
+        SessionFactory sf = HibernateUtil.getSessionFactory();
 
-        MenuDAO.getTotalMenuItemsForMonthYear(10, 2024);
+        sf.inTransaction(session -> {
+            session.createMutationQuery("UPDATE Courier c SET c.status = 'AVAILABLE' where c.status = 'WAITING'")
+            .executeUpdate();
+        });
 
         HibernateUtil.shutdown();
     }
