@@ -4,7 +4,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 
-//TODO: rewrite a bit to obscure gpt use
 public class PasswordEncrypt {
 
     // Method to hash a password using SHA-256
@@ -39,23 +38,4 @@ public class PasswordEncrypt {
         return hashedInput.equals(storedHashedPassword);
     }
 
-    
-    public static void main(String[] args) {
-        // Example usage
-
-        // Step 1: Hash the password when storing it
-        String password = "mySecretPassword";
-        String hashedPassword = hashPassword(password);
-        System.out.println("Hashed Password: " + hashedPassword);
-
-        // Step 2: Validate user login by checking input password
-        String inputPassword = "mySecretPassword"; // User enters this during login
-        boolean isValid = checkPassword(inputPassword, hashedPassword);
-
-        if (isValid) {
-            System.out.println("Password is correct!");
-        } else {
-            System.out.println("Invalid password.");
-        }
-    }
 }

@@ -171,74 +171,39 @@ public class Querries {
     }
 
 
-    //disclaimer: GPT helped with this one
-    public static List<Object[]> getTotalMenuItemsForMonthYear(Session session, int month, int year){
+    public static List<Object[]> getTotalMenuItemsByGender(Session session, char gender){
         String query = 
         """
             SELECT 
-                mi.name,
+                mi.menuItemId,
+                mi.name AS menu_item_name,
                 SUM(oi.quantity) AS total_quantity_ordered,
-                recipe_cost.total_item_price AS menuitem_price,
-                ((SUM(oi.quantity) * recipe_cost.total_item_price) * d.discount) AS discounted_total_price
-            FROM 
-                OrderItem oi
-            JOIN 
-                MenuItem mi ON oi.menuItemId = mi.menuItemId
-            JOIN 
-                Order o ON oi.orderId = o.orderId
-            JOIN 
-                DiscountCode d ON o.discountId = d.discountID
-            JOIN 
-                (
-                    SELECT 
-                        r.menuItemId AS menuItemId,
-                        SUM(i.price * r.amount  * 1.40 * 1.09) AS total_item_price
-                    FROM 
-                        Recipe r
-                    JOIN 
-                        Ingredient i ON r.ingredientId = i.ingredientId
-                    GROUP BY 
-                        r.menuItemId
-                ) recipe_cost ON mi.menuItemId = recipe_cost.menuItemId
-            WHERE 
-                MONTH(o.orderTime) = :month
-                AND YEAR(o.orderTime) = :year
-            GROUP BY 
-                mi.menuItemId, d.discount
-            ORDER BY 
-                total_quantity_ordered DESC
+                ROUND(
+                    SUM(
+                        (
+                            SELECT SUM(i.price * r.amount) 
+                            FROM Recipe r
+                            JOIN Ingredient i ON r.ingredientId = i.ingredientId
+                            WHERE r.menuItemId = mi.menuItemId
+                        ) * 1.40 * 1.09 * oi.quantity * (1-dc.discount/100)
+                    ), 2
+                ) AS total_price
+            FROM Order o
+            JOIN OrderItem oi ON o.orderId = oi.orderId
+            JOIN MenuItem mi ON oi.menuItemId = mi.menuItemId
+            JOIN Customer c ON o.customerId = c.customerId
+            JOIN DiscountCode dc ON o.discountId = dc.discountID 
+            WHERE MONTH(o.orderTime) = MONTH(CURRENT_DATE)
+            AND YEAR(o.orderTime) = YEAR(CURRENT_DATE)
+            AND c.gender = :gender
+            GROUP BY mi.menuItemId, mi.name
+            ORDER BY total_quantity_ordered DESC
             """;
             return session.createSelectionQuery(query, Object[].class)
-            .setParameter("month", month)
-            .setParameter("year", year)
+            .setParameter("gender", gender)
             .getResultList();
     }
 
-    public static List<Object[]> getTotalDeliveriesMonth(Session session, int month, int year){
-        String query = 
-        """
-            SELECT oi.menuItemId
-            FROM Delivery d 
-            JOIN (
-                    SELECT 
-                        r.menuItemId AS menuItemId,
-                        SUM(i.price * r.amount  * 1.40 * 1.09) AS total_item_price
-                    FROM 
-                        Recipe r
-                    JOIN 
-                        Ingredient i ON r.ingredientId = i.ingredientId
-                    GROUP BY 
-                        r.menuItemId
-                ) recipe_cost ON mi.menuItemId = recipe_cost.menuItemId
-            JOIN OrderItem oi ON d.orderId = oi.orderId 
-            JOIN Order o ON d.orderId = o.orderId 
-            WHERE MONTH(o.orderTime) = :month AND YEAR(o.orderTime) = :year
-            """;
-            return session.createSelectionQuery(query, Object[].class)
-            .setParameter("month", month)
-            .setParameter("year", year)
-            .getResultList();
-    }
 
     public static DiscountCode getDiscountCodeByString(Session session, String discountString) {
         return session.createSelectionQuery(
@@ -262,6 +227,87 @@ public class Querries {
 
     public static void setDiscountAsUsed(Session session, int dcid) {
         session.createMutationQuery("UPDATE DiscountCode dc SET dc.isUsed = true WHERE dc.discountID = :dcid").setParameter("dcid", dcid).executeUpdate();
+    }
+
+    public static void changeStatus(Session session, int orderId, String status) {
+        session.createMutationQuery("UPDATE Order o SET o.status = :status WHERE o.orderId = :id").setParameter("id", orderId).setParameter("status", status).executeUpdate();
+    }
+
+    public static MenuItem getMenuItemByID(Session session, int id) {
+        return session.createSelectionQuery(
+                "SELECT mi "+
+                "FROM MenuItem mi "+
+                "WHERE mi.menuItemId  = :id", 
+                MenuItem.class)
+                .setParameter("id", id)
+                .uniqueResult();    
+    }
+
+    public static List<Object[]> getTotalMenuItemsByAge(Session session, int age) {
+        String query = 
+        """
+            SELECT 
+                mi.menuItemId,
+                mi.name AS menu_item_name,
+                SUM(oi.quantity) AS total_quantity_ordered,
+                ROUND(
+                    SUM(
+                        (
+                            SELECT SUM(i.price * r.amount) 
+                            FROM Recipe r
+                            JOIN Ingredient i ON r.ingredientId = i.ingredientId
+                            WHERE r.menuItemId = mi.menuItemId
+                        ) * 1.40 * 1.09 * oi.quantity * (1-dc.discount/100)
+                    ), 2
+                ) AS total_price
+            FROM Order o
+            JOIN OrderItem oi ON o.orderId = oi.orderId
+            JOIN MenuItem mi ON oi.menuItemId = mi.menuItemId
+            JOIN Customer c ON o.customerId = c.customerId
+            JOIN DiscountCode dc ON o.discountId = dc.discountID 
+            WHERE MONTH(o.orderTime) = MONTH(CURRENT_DATE)
+            AND YEAR(o.orderTime) = YEAR(CURRENT_DATE)
+            AND FLOOR(DATEDIFF(CURRENT_DATE, c.birthDate) / 365.25) = :age
+            GROUP BY mi.menuItemId, mi.name
+            ORDER BY total_quantity_ordered DESC
+            """;
+            return session.createSelectionQuery(query, Object[].class)
+            .setParameter("age", age)
+            .getResultList();
+    }
+
+    public static List<Object[]> getTotalMenuItemsByPostal(Session session, int postal) {
+        String query = 
+        """
+            SELECT 
+                mi.menuItemId,
+                mi.name AS menu_item_name,
+                SUM(oi.quantity) AS total_quantity_ordered,
+                ROUND(
+                    SUM(
+                        (
+                            SELECT SUM(i.price * r.amount) 
+                            FROM Recipe r
+                            JOIN Ingredient i ON r.ingredientId = i.ingredientId
+                            WHERE r.menuItemId = mi.menuItemId
+                        ) * 1.40 * 1.09 * oi.quantity * (1-dc.discount/100)
+                    ), 2
+                ) AS total_price
+            FROM Order o
+            JOIN OrderItem oi ON o.orderId = oi.orderId
+            JOIN MenuItem mi ON oi.menuItemId = mi.menuItemId
+            JOIN Customer c ON o.customerId = c.customerId
+            JOIN Adress a ON c.adressId = a.adressId
+            JOIN DiscountCode dc ON o.discountId = dc.discountID 
+            WHERE MONTH(o.orderTime) = MONTH(CURRENT_DATE)
+            AND YEAR(o.orderTime) = YEAR(CURRENT_DATE)
+            AND a.postal = :postal
+            GROUP BY mi.menuItemId, mi.name
+            ORDER BY total_quantity_ordered DESC
+            """;
+            return session.createSelectionQuery(query, Object[].class)
+            .setParameter("postal", postal)
+            .getResultList();
     }
 
  }

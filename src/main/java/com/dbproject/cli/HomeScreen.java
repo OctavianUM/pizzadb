@@ -3,20 +3,15 @@ package com.dbproject.cli;
 
     import java.util.Scanner;
 
-    import com.dbproject.util.HibernateUtil;
-
     public class HomeScreen {
 
-    public static void main(String[] args) {
-        HibernateUtil.getSessionFactory();
+    public static void show() {
 
-        Scanner scanner = new Scanner(System.in);
         int choice = 0;
         int customerID = Integer.MIN_VALUE;
-        // DeliveryManager deliveryManager = new DeliveryManager();
-        //TODO: deliveries and bd-order
-        // deliveryManager.delivery(OrderDAO.getOrderByID(1));
+
         while (true) {
+            Scanner scanner = new Scanner(System.in);
             System.out.println("\n====== MAIN MENU ======");
             System.out.println("(Hidden) 0. admin");
             System.out.println("1. Login");
@@ -30,14 +25,14 @@ package com.dbproject.cli;
                 
                 switch (choice) {
                     case 0:
-                        AdminMenu.show();
+                        AdminMenu.show(scanner);
                         break;
                     case 1:
                         customerID = CustomerCLI.customerAccount();
                         break;
                     case 2:
                         if(customerID > 0){
-                            MenuCLI.openMenu(customerID);
+                            MenuCLI.openMenu(scanner, customerID);
                             
                         }else{
                             System.out.println("\nYou must login to access the menu");
@@ -53,9 +48,7 @@ package com.dbproject.cli;
                     case 4:
                         System.out.println("Exiting...");
                         scanner.close();
-                        HibernateUtil.shutdown();
-                        HibernateUtil.shutdown();
-                        System.exit(0);
+                        return;
                     default:
                         System.out.println("Invalid choice. Please select 1, 2, or 3.");
                 }
@@ -66,11 +59,6 @@ package com.dbproject.cli;
         }
         
         
-    }
-
-    public static void adminMenu() {
-        System.out.println("You selected to See Admin Menu.");
-        // Add admin menu logic here
     }
 }
 

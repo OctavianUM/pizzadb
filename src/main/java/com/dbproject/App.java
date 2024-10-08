@@ -1,6 +1,7 @@
 package com.dbproject;
 
-import com.dbproject.dao.DiscountDAO;
+import com.dbproject.cli.HomeScreen;
+import com.dbproject.dao.MenuDAO;
 import com.dbproject.util.*;
 
 
@@ -10,7 +11,7 @@ public class App {
         // initialize database connection when starting the program
         HibernateUtil.getSessionFactory();
 
-        System.out.println(DiscountDAO.getDiscountCodeByString("OFF10").getDiscount());
+        HomeScreen.show();
 
         HibernateUtil.shutdown();
     }

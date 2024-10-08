@@ -22,7 +22,7 @@ import jakarta.persistence.Table;
 public class Adress {
     @Id 
     @Generated
-    private long adressId;
+    private int adressId;
     @NaturalId
     private short postal;
     @NaturalId
@@ -30,7 +30,7 @@ public class Adress {
     @NaturalId
     private int number;
 
-    Adress() {}
+    Adress(){}
 
     public Adress( short postal, String street, int number) {
         this.postal = postal;
@@ -38,7 +38,7 @@ public class Adress {
         this.number = number;
     }
 
-    public long getId() {
+    public int getId() {
         return adressId;
     }
 
@@ -54,7 +54,7 @@ public class Adress {
         return street;
     }
 
-    public void setId(long adressId) {
+    public void setId(int adressId) {
         this.adressId = adressId;
     }
 

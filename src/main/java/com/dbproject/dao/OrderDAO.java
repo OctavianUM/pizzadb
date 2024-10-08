@@ -11,27 +11,11 @@ import com.dbproject.util.Querries;
 
 public class OrderDAO {
     public static int createOrder(Order order){
-        var sessionFactory = HibernateUtil.getSessionFactory();
-        var session = sessionFactory.openSession();
-        try {
-            Transaction transaction = session.beginTransaction();
-
-            int id = (int) session.save(order);
-            transaction.commit();
-            return id;
-        } finally {
-            
-            session.close();
-        }
+        HibernateUtil.getSessionFactory().inTransaction(session ->{
+            session.persist(order);
+        });
+        return order.getOrderId();
     }
-
-    // public static boolean updateOrderStatus(){
-
-    // }
-
-    // public static boolean removeOrder(){
-
-    // }
 
     public static List<Integer> getOrderByStatus(OrderStatus status){
         var sessionFactory = HibernateUtil.getSessionFactory();
@@ -63,5 +47,11 @@ public class OrderDAO {
         } finally {
             session.close();
         }
+    }
+
+    public static void updateOrderStatus(int orderId, OrderStatus status) {
+        HibernateUtil.getSessionFactory().inTransaction(session ->{
+            Querries.changeStatus(session, orderId, status.toString());
+        });
     }
 }

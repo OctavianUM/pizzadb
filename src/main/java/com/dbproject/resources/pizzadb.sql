@@ -28,7 +28,7 @@ CREATE TABLE `adress` (
   `street` varchar(32) DEFAULT NULL,
   `number` int DEFAULT NULL,
   PRIMARY KEY (`adressId`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,7 +37,6 @@ CREATE TABLE `adress` (
 
 LOCK TABLES `adress` WRITE;
 /*!40000 ALTER TABLE `adress` DISABLE KEYS */;
-INSERT INTO `adress` VALUES (1,1001,'Maple Street',12),(2,1001,'Oak Avenue',34),(3,1001,'Maple Street',29),(4,1001,'Pine Road',56),(5,1002,'Elm Boulevard',78),(6,1002,'Elm Boulevard',69),(7,1002,'Birch Lane',23),(8,1002,'Cedar Court',45),(9,1002,'Spruce Drive',7),(10,1002,'Spruce Drive',26),(21,1003,'Paul-Henri Spaaklaan',1);
 /*!40000 ALTER TABLE `adress` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -63,7 +62,7 @@ CREATE TABLE `courier` (
 
 LOCK TABLES `courier` WRITE;
 /*!40000 ALTER TABLE `courier` DISABLE KEYS */;
-INSERT INTO `courier` VALUES (1,1002,'AVAILABLE',NULL),(2,1003,'AVAILABLE',NULL),(3,1001,'DELIVERING','2024-10-07 10:51:55'),(4,1002,'AVAILABLE',NULL);
+INSERT INTO `courier` VALUES (1,1002,'AVAILABLE',NULL),(2,1003,'AVAILABLE',NULL),(3,1001,'AVAILABLE',NULL),(4,1002,'AVAILABLE',NULL);
 /*!40000 ALTER TABLE `courier` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -88,7 +87,7 @@ CREATE TABLE `customer` (
   UNIQUE KEY `email` (`email`),
   KEY `adressID` (`adressID`),
   CONSTRAINT `customer_ibfk_1` FOREIGN KEY (`adressID`) REFERENCES `adress` (`adressId`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -97,7 +96,6 @@ CREATE TABLE `customer` (
 
 LOCK TABLES `customer` WRITE;
 /*!40000 ALTER TABLE `customer` DISABLE KEYS */;
-INSERT INTO `customer` VALUES (1,'John','Doe','M',12345678,1,'1970-01-01','johndoe@example.com','c2713b62c903791bdefc5a6a99df04d4330de491bbc7a0ca6a5007337e4a6028'),(3,'jesse','hoydonckx','\0',123456789,1,'2005-05-01','email@example.com','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),(4,'max','mad','\0',987654321,1,'2005-05-01','madmx','148de9c5a7a44d19e56cd9ae1a554bf67847afb0c58f6e12fa29ac7ddfca9940');
 /*!40000 ALTER TABLE `customer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -142,7 +140,7 @@ CREATE TABLE `discountcode` (
   `discountString` varchar(16) DEFAULT NULL,
   `isUsed` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`discountID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -151,7 +149,7 @@ CREATE TABLE `discountcode` (
 
 LOCK TABLES `discountcode` WRITE;
 /*!40000 ALTER TABLE `discountcode` DISABLE KEYS */;
-INSERT INTO `discountcode` VALUES (1,10,'OFF10',0);
+INSERT INTO `discountcode` VALUES (1,10,'OFF10',0),(2,100,'	1p89eyP8723iB8',0),(3,0,'',0);
 /*!40000 ALTER TABLE `discountcode` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -329,4 +327,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-07 17:32:57
+-- Dump completed on 2024-10-08 16:30:43

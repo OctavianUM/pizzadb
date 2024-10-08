@@ -81,19 +81,19 @@ public class MenuDAO {
         } 
     }
 
-    public static void getTotalMenuItemsForMonthYear(int month, int year){
+    public static void getTotalMenuItemsByGender(char gender){
         var sessionFactory = HibernateUtil.getSessionFactory();
         var session = sessionFactory.openSession();
         try {
-            List<Object[]> objectList = Querries.getTotalMenuItemsForMonthYear(session, month, year);
+            List<Object[]> objectList = Querries.getTotalMenuItemsByGender(session, gender);
             
-            System.out.printf("%-30s %-10s %-10s %-10s%n",  "Name", "Quantity", "Price", "Total Price");
+            System.out.printf("%-10s %-30s %-10s %-10s%n",  "Id", "Name", "Amount", "Total Price");
             System.out.println("-------------------------------------------------------------------");
 
             // Loop through the array and print each item
             double total_item_price = 0;
             for (Object[] item : objectList) {
-                System.out.printf("%-30s %-10s %-10s $%-10s%n",
+                System.out.printf("%-10s %-30s %-10s $%-10s%n",
                         item[0], 
                         item[1], 
                         item[2],
@@ -107,13 +107,88 @@ public class MenuDAO {
             double profit = total_item_price -(total_item_price / 1.09)/ 1.4;
 
             System.out.println("\nTotal profit: " + profit );
-            System.out.println("\nTotal VAT: " + vat );
-            System.out.println("\nTotal combined: " + (total_item_price - vat - profit));
+            System.out.println("Total VAT: " + vat );
+            System.out.println("Total ingredient cost: " + (total_item_price - vat - profit));
 
-            System.out.println("\nTotal combined: " + total_item_price);
+            System.out.println("\nTotal income: " + total_item_price);
 
         } finally {
             session.close();
         } 
     }
+
+
+    public static void getTotalMenuItemsByAge(int age){
+        var sessionFactory = HibernateUtil.getSessionFactory();
+        var session = sessionFactory.openSession();
+        try {
+            List<Object[]> objectList = Querries.getTotalMenuItemsByAge(session, age);
+            
+            System.out.printf("%-10s %-30s %-10s %-10s%n",  "Id", "Name", "Amount", "Total Price");
+            System.out.println("-------------------------------------------------------------------");
+
+            // Loop through the array and print each item
+            double total_item_price = 0;
+            for (Object[] item : objectList) {
+                System.out.printf("%-10s %-30s %-10s $%-10s%n",
+                        item[0], 
+                        item[1], 
+                        item[2],
+                        item[3]
+                    );
+                total_item_price += (double) item[3];
+            }
+
+            
+            double vat = total_item_price - total_item_price / 1.09;
+            double profit = total_item_price -(total_item_price / 1.09)/ 1.4;
+
+            System.out.println("\nTotal profit: " + profit );
+            System.out.println("Total VAT: " + vat );
+            System.out.println("Total ingredient cost: " + (total_item_price - vat - profit));
+
+            System.out.println("\nTotal income: " + total_item_price);
+
+        } finally {
+            session.close();
+        } 
+    }
+
+
+    public static void getTotalMenuItemsByPostal(int postal){
+        var sessionFactory = HibernateUtil.getSessionFactory();
+        var session = sessionFactory.openSession();
+        try {
+            List<Object[]> objectList = Querries.getTotalMenuItemsByPostal(session, postal);
+            
+            System.out.printf("%-10s %-30s %-10s %-10s%n",  "Id", "Name", "Amount", "Total Price");
+            System.out.println("-------------------------------------------------------------------");
+
+            // Loop through the array and print each item
+            double total_item_price = 0;
+            for (Object[] item : objectList) {
+                System.out.printf("%-10s %-30s %-10s $%-10s%n",
+                        item[0], 
+                        item[1], 
+                        item[2],
+                        item[3]
+                    );
+                total_item_price += (double) item[3];
+            }
+
+            
+            double vat = total_item_price - total_item_price / 1.09;
+            double profit = total_item_price -(total_item_price / 1.09)/ 1.4;
+
+            System.out.println("\nTotal profit: " + profit );
+            System.out.println("Total VAT: " + vat );
+            System.out.println("Total ingredient cost: " + (total_item_price - vat - profit));
+
+            System.out.println("\nTotal income: " + total_item_price);
+
+        } finally {
+            session.close();
+        } 
+    }
+
 }
