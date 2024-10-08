@@ -22,6 +22,7 @@ public class CustomerCLI {
                 return login(scanner);
         
             default:
+                scanner.close();
                 return Integer.MIN_VALUE;
         }
     }
@@ -41,7 +42,7 @@ public class CustomerCLI {
 
             int id = new CustomerDAO().validateLogin(email, pass);
             if(id > 0){
-                System.out.println("Succesfull login");
+                System.out.println("Successfully login");
                 return id;
             }
         }

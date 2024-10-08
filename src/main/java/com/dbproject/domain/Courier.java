@@ -1,8 +1,5 @@
 package com.dbproject.domain;
 
-import org.hibernate.annotations.Generated;
-import org.hibernate.annotations.NaturalId;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 

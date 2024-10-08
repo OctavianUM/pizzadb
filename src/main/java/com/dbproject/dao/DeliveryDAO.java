@@ -6,7 +6,6 @@ import org.hibernate.Transaction;
 import com.dbproject.domain.Delivery;
 import com.dbproject.util.HibernateUtil;
 
-import static com.dbproject.domain.Delivery_.orderId;
 
 
 public class DeliveryDAO {

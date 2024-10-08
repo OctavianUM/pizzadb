@@ -1,7 +1,5 @@
 package com.dbproject.util;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -262,7 +260,7 @@ public class Querries {
                 .uniqueResult();    
     }
 
-    public static void setDicountAsUsed(Session session, int dcid) {
+    public static void setDiscountAsUsed(Session session, int dcid) {
         session.createMutationQuery("UPDATE DiscountCode dc SET dc.isUsed = true WHERE dc.discountID = :dcid").setParameter("dcid", dcid).executeUpdate();
     }
 

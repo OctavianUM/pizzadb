@@ -1,6 +1,5 @@
 package com.dbproject.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Transaction;
@@ -8,7 +7,6 @@ import org.hibernate.Transaction;
 import com.dbproject.domain.Order;
 import com.dbproject.util.HibernateUtil;
 import com.dbproject.util.OrderStatus;
-import com.dbproject.util.PasswordEncrypt;
 import com.dbproject.util.Querries;
 
 public class OrderDAO {

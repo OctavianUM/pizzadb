@@ -1,7 +1,6 @@
 package com.dbproject.cli;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -9,15 +8,12 @@ import java.util.Scanner;
 import com.dbproject.dao.MenuDAO;
 import com.dbproject.dao.OrderDAO;
 import com.dbproject.dao.OrderItemDAO;
-import com.dbproject.domain.Order;
 import com.dbproject.util.OrderStatus;
 
 public class AdminMenu {
     public static void show(){
         Scanner scanner = new Scanner(System.in);
         int choice = 0;
-        int customerID = Integer.MIN_VALUE;
-
         while (true) {
             System.out.println("\n====== ADMIN MENU ======");
             System.out.println("1. Earnings report");
@@ -48,6 +44,7 @@ public class AdminMenu {
                 System.out.println("Invalid input. Please enter a number.");
                 scanner.next(); // Clear invalid input
             }
+            scanner.close();
         }
     }
 
@@ -56,7 +53,7 @@ public class AdminMenu {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            ArrayList<Integer> orderIdList = (ArrayList) OrderDAO.getOrderByStatus(OrderStatus.PENDING);
+            ArrayList<Integer> orderIdList = (ArrayList<Integer>) OrderDAO.getOrderByStatus(OrderStatus.PENDING);
             for (int orderId : orderIdList) {
                 List<Object[]> orderlist = OrderItemDAO.getOrderItems(orderId);
 
@@ -78,8 +75,10 @@ public class AdminMenu {
 
             //TODO add to delivery
             scanner.nextInt();
+            
+            scanner.close();
         }
-
+        
         
     }
 }

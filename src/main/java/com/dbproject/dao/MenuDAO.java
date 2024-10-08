@@ -1,14 +1,8 @@
 package com.dbproject.dao;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import org.hibernate.Hibernate;
-import org.hibernate.Session;
-
-import com.dbproject.domain.Customer;
 import com.dbproject.domain.Ingredient;
 import com.dbproject.domain.MenuItem;
 import com.dbproject.util.HibernateUtil;
@@ -25,7 +19,7 @@ public class MenuDAO {
         var sessionFactory = HibernateUtil.getSessionFactory();
         var session = sessionFactory.openSession();
         try {
-            return (ArrayList) Querries.getMenuById(session, menuID);
+            return (ArrayList<MenuItem>) Querries.getMenuById(session, menuID);
         } finally {
             session.close();
         }       
@@ -41,7 +35,7 @@ public class MenuDAO {
         var sessionFactory = HibernateUtil.getSessionFactory();
         var session = sessionFactory.openSession();
         try {
-            return (ArrayList) Querries.getMenuItemIngredients(session, menuItemName);
+            return (ArrayList<Ingredient>) Querries.getMenuItemIngredients(session, menuItemName);
         } finally {
             session.close();
         } 
@@ -57,7 +51,7 @@ public class MenuDAO {
         var sessionFactory = HibernateUtil.getSessionFactory();
         var session = sessionFactory.openSession();
         try {
-            return (ArrayList) Querries.getMenuItemIngredients(session, menuItemId);
+            return (ArrayList<Ingredient>) Querries.getMenuItemIngredients(session, menuItemId);
         } finally {
             session.close();
         } 

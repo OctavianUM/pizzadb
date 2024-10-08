@@ -1,12 +1,10 @@
 package com.dbproject.cli;
 
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
 
-import java.util.ArrayList;
 
 import com.dbproject.dao.DiscountDAO;
 import com.dbproject.dao.MenuDAO;
@@ -16,8 +14,6 @@ import com.dbproject.domain.DiscountCode;
 import com.dbproject.domain.Order;
 import com.dbproject.domain.OrderItem;
 import com.dbproject.util.OrderStatus;
-import com.dbproject.util.Querries;
-
 public class MenuCLI {
     public static int openMenu(int customerId){
 
@@ -67,10 +63,12 @@ public class MenuCLI {
         DiscountCode dc = DiscountDAO.getDiscountCodeByString( discountString);
         if (dc != null && !dc.getIsUsed()){
             DiscountDAO.setUsed(dc.getDiscountID());
+            scanner.close();
             return dc.getDiscountID();
         }else{
             System.out.println("\ninvalid discount code");
         }
+        scanner.close();
         return 0;
 
     }
@@ -87,16 +85,16 @@ public class MenuCLI {
 
     private static int parseNext(Scanner scanner){
         if(scanner.hasNextInt()){
-            return scanner.nextInt();
-        }else{
-            String in = scanner.next().toLowerCase();
-            if(in.equals("confirm")){
-                return -1;
-            }else if(in.equals("exit")){
-                return 0;
-            }
-            return Integer.MIN_VALUE;
+            return scanner.nextInt(); 
+            
         }
+        String in = scanner.next().toLowerCase();
+        if(in.equals("confirm")){
+            return -1;
+        }else if(in.equals("exit")){
+            return 0;
+        }
+        return Integer.MIN_VALUE;
     }
 
     public static void showOrderInfo(int orderId){

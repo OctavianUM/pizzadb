@@ -1,6 +1,5 @@
 package com.dbproject.dao;
 
-import com.dbproject.domain.Customer;
 import com.dbproject.domain.DiscountCode;
 import com.dbproject.util.HibernateUtil;
 import com.dbproject.util.Querries;
@@ -33,7 +32,7 @@ public class DiscountDAO {
         var sessionFactory = HibernateUtil.getSessionFactory();
        
         sessionFactory.inTransaction(s ->{
-            Querries.setDicountAsUsed(s, dcid);
+            Querries.setDiscountAsUsed(s, dcid);
         });;
     }
 

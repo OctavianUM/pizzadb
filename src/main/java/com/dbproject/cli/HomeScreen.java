@@ -3,16 +3,7 @@ package com.dbproject.cli;
 
     import java.util.Scanner;
 
-    import com.dbproject.dao.CourierDAO;
-    import com.dbproject.dao.DeliveryDAO;
-    import com.dbproject.dao.OrderDAO;
-    import com.dbproject.util.DeliveryManager;
-    import com.dbproject.util.Querries;
-    import org.hibernate.Hibernate;
-
-import com.dbproject.dao.MenuDAO;
-import com.dbproject.util.HibernateUtil;
-import com.dbproject.util.HibernateUtil;
+    import com.dbproject.util.HibernateUtil;
 
     public class HomeScreen {
 
@@ -22,8 +13,8 @@ import com.dbproject.util.HibernateUtil;
         Scanner scanner = new Scanner(System.in);
         int choice = 0;
         int customerID = Integer.MIN_VALUE;
-        DeliveryManager deliveryManager = new DeliveryManager();
-        // //TODO: deliveries and bd-order
+        // DeliveryManager deliveryManager = new DeliveryManager();
+        //TODO: deliveries and bd-order
         // deliveryManager.delivery(OrderDAO.getOrderByID(1));
         while (true) {
             System.out.println("\n====== MAIN MENU ======");
@@ -46,7 +37,7 @@ import com.dbproject.util.HibernateUtil;
                         break;
                     case 2:
                         if(customerID > 0){
-                            int orderid = MenuCLI.openMenu(customerID);
+                            MenuCLI.openMenu(customerID);
                             
                         }else{
                             System.out.println("\nYou must login to access the menu");

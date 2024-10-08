@@ -39,7 +39,7 @@ public class CourierDAO {
             try {
                 Transaction transaction = session.beginTransaction();
                 courier.setTimeLastDelivery(LocalDateTime.now());
-                session.update(courier);
+                session.merge(courier);
                 session.flush();
                 transaction.commit();
             }   finally {
@@ -55,7 +55,7 @@ public class CourierDAO {
                 try {
                     Transaction transaction = session.beginTransaction();
                     courier.setStatus("DELIVERING");
-                    session.update(courier);
+                    session.merge(courier);
                     transaction.commit();
                 } finally {
                     session.close();
@@ -66,7 +66,7 @@ public class CourierDAO {
             try {
                 Transaction transaction = session.beginTransaction();
                 courier.setStatus("AVAILABLE");
-                session.update(courier);
+                session.merge(courier);
                 transaction.commit();
             } finally {
                 session.close();

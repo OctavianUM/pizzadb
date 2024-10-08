@@ -1,13 +1,8 @@
 package com.dbproject.util;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 import com.dbproject.dao.CourierDAO;
-import com.dbproject.dao.CustomerDAO;
 import com.dbproject.dao.DeliveryDAO;
 import com.dbproject.domain.Courier;
 import com.dbproject.domain.Order;

@@ -1,7 +1,6 @@
 package com.dbproject.dao;
 
 
-import org.hibernate.Transaction;
 
 import com.dbproject.domain.Adress;
 import com.dbproject.domain.Customer;

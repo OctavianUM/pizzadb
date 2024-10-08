@@ -1,9 +1,7 @@
 package com.dbproject.dao;
 
-import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.dbproject.domain.Order;
 import com.dbproject.domain.OrderItem;
 import com.dbproject.util.HibernateUtil;
 import com.dbproject.util.Querries;
