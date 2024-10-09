@@ -11,10 +11,19 @@ import com.dbproject.util.Querries;
 
 public class OrderDAO {
     public static int createOrder(Order order){
-        HibernateUtil.getSessionFactory().inTransaction(session ->{
+        var sessionFactory = HibernateUtil.getSessionFactory();
+        var session = sessionFactory.openSession();
+        try {
+            Transaction transaction = session.beginTransaction();
+
             session.persist(order);
-        });
-        return order.getOrderId();
+            session.flush();
+            transaction.commit();
+            return order.getOrderId();
+        } finally {
+            
+            session.close();
+        }
     }
 
     public static List<Integer> getOrderByStatus(OrderStatus status){

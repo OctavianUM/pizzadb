@@ -19,12 +19,15 @@ import com.dbproject.domain.DiscountCode;
 import com.dbproject.domain.Order;
 import com.dbproject.domain.OrderItem;
 import com.dbproject.util.OrderStatus;
+import com.dbproject.util.Querries;
 public class MenuCLI {
 
     private static boolean isBirthday = false;
     private static boolean validBdayOrder = false;
+    private static int customerID;
 
     public static int openMenu(Scanner scanner, int customerId){
+        customerID = customerId;
         Date bday_date = CustomerDAO.getCustomerById(customerId).getBirthDate();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String dateString = dateFormat.format(bday_date);
@@ -94,24 +97,31 @@ public class MenuCLI {
     }
 
     public static int addDiscount(Scanner scanner){
-
+        int num_pizzas = CustomerDAO.getPizzasOrderedByCustomerById(customerID);
         if (validBdayOrder){
+            System.out.println("Your was eligible for the b-day discount. the discount is applied automatically");
             return 2;
-        }
+        } else if(num_pizzas>0 && num_pizzas%10 == 0){
+            System.out.println("You ordered 10 pizzas. A 10% discount is applied automatically");
+            return 1;
+        } else {
 
-        MenuDAO.printMenu(0);
-        System.out.println("\nDo you have  a promo code (put - if not)? " );
-        String discountString = scanner.next();
+            MenuDAO.printMenu(0);
+            System.out.println("\nDo you have  a promo code (put - if not)? " );
+            String discountString = scanner.next();
 
-        DiscountCode dc = DiscountDAO.getDiscountCodeByString( discountString);
-        if(dc != null && !dc.getIsUsed()){
-            DiscountDAO.setUsed(dc.getDiscountID());
-            return dc.getDiscountID();
-        }else if(discountString.equals("-")){
-            return 3;
+            DiscountCode dc = DiscountDAO.getDiscountCodeByString( discountString);
+            if(dc != null && !dc.getIsUsed()){
+                DiscountDAO.setUsed(dc.getDiscountID());
+                return dc.getDiscountID();
+            }else if(discountString.equals("-")){
+                return 3;
+            }else{
+                System.out.println("\ninvalid discount code");
+                return 3;
+            }
+
         }
-        System.out.println("\ninvalid discount code");
-        return 3;
 
     }
     private static int placeOrder(int customerId, HashMap<Integer,Integer> menuItems, Scanner scanner){

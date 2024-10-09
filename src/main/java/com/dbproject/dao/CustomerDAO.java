@@ -21,6 +21,16 @@ public class CustomerDAO {
         
     }
 
+    public static int getPizzasOrderedByCustomerById(int id){
+        var sessionFactory = HibernateUtil.getSessionFactory();
+        var session = sessionFactory.openSession();
+        try {
+            return Querries.getPizasOrderedByCustomerId(session, id);
+        } finally {
+            session.close();
+        }
+    }
+
     // Method to validate login
     public int validateLogin(String email, String password){
         var sessionFactory = HibernateUtil.getSessionFactory();

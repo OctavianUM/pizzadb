@@ -6,6 +6,8 @@ import org.hibernate.annotations.NaturalId;
 import com.dbproject.util.OrderStatus;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
@@ -14,7 +16,7 @@ import java.time.LocalDateTime;
 @Table(name="[Order]") //enclosed in brackets to prevent the sql command ORDER to override the table name
 public class Order {
     @Id
-    @Generated
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int orderId;
     @NaturalId
     private int customerId;

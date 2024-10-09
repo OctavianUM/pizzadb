@@ -3,6 +3,7 @@ package com.dbproject.util;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.hibernate.type.descriptor.java.LongJavaType;
 
 import com.dbproject.domain.Adress;
 import com.dbproject.domain.Courier;
@@ -13,6 +14,22 @@ import com.dbproject.domain.MenuItem;
 import com.dbproject.domain.Order;
 
 public class Querries {
+
+    public static int getPizasOrderedByCustomerId(Session session, int id){
+        String query = """
+            SELECT SUM(oi.quantity) 
+            FROM Order AS o 
+            JOIN OrderItem AS oi ON o.orderId = oi.orderId 
+            JOIN MenuItem AS mi ON oi.menuItemId = mi.menuItemId 
+            WHERE mi.type = 'pizza'
+            AND o.customerId = :id
+            """;
+            var result = session.createSelectionQuery(query, long.class)
+            .setParameter("id", id)
+            .getSingleResult();
+        return (result != null)? (int)(long) result : 0;
+    }
+
     public static Adress getAdressByStreet(Session session, String street){
         return session.createNamedQuery("select_adress_by_street", Adress.class)
                 .setParameter("street", "Paul-Henri Spaaklaan")
